@@ -1,36 +1,37 @@
 "use client"
 
-import { IconCirclePlusFilled, IconMail, type Icon } from "@tabler/icons-react"
+import * as React from "react"
+import { type Icon } from "@tabler/icons-react"
 
-import { Button } from "@/components/ui/buttonUi"
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarGroupLabel
 } from "@/components/ui/sidebar"
 
-export function NavMain({
+export function NavSecondary({
   items,
+  ...props
 }: {
   items: {
     title: string
     url: string
-    icon?: Icon
+    icon: Icon
   }[]
-}) {
+} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
-    <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col">
-      <SidebarGroupLabel>Overview</SidebarGroupLabel>
+    <SidebarGroup {...props}>
+      <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
+              <SidebarMenuButton asChild>
+                <a href={item.url}>
+                  <item.icon />
+                  <span>{item.title}</span>
+                </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

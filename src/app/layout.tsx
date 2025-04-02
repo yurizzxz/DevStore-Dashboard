@@ -19,10 +19,8 @@ export default function RootLayout({
         <SidebarProvider>
           <AppSidebar />
           <main className="bg-bgColor w-full text-[#fff]">
-            <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <SidebarTrigger />
-              <div className=" min-h-[100vh] flex-1 rounded-xl md:min-h-min">
-                
+            <div className="flex flex-1 flex-col pt-5 gap-4 px-2 md:px-6">
+              <div className=" min-h-[100vh] flex-1 rounded-xl md:min-h-min">                
                 {children}
               </div>
             </div>

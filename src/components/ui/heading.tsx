@@ -1,5 +1,7 @@
-export function HeadingTitle ({ children }: { children: React.ReactNode }) {
-    return (
-        <h1 className="text-3xl font-semibold">{children}</h1>
-    )
-} 
+export default function HeadingTitle({
+    children,
+  }: React.ComponentProps<"h1">) {
+  return (
+    <h1 className="text-2xl font-semibold">{children}</h1>
+  );
+}

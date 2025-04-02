@@ -29,66 +29,55 @@
   --color-gray-900: #110F17;
   --color-gray-1000: #07060A;
 
-  --color-background: #040205;
-  --color-navbg: #09060f;
+  --color-bgColor: #05040a;
+  --color-navbg: #08070f;
 
-  --color-card: #09060f;
-  --color-cardForeground: oklch(0.985 0 0);
-  --color-popover: oklch(0.205 0 0);
-  --color-sidebarBorder: #1C1824;
-  --color-sidebarForeground: oklch(0.985 0 0);
-  --color-sidebarAccent: oklch(0.269 0 0);
-  --color-sidebarAccentForeground: oklch(0.985 0 0);
+  
 }
 
 :root {
 
-  --background: #040205; 
+  --background: #05040a; 
   --foreground: oklch(0.985 0 0);
-  
+
   --card: #09060f; 
   --card-foreground: oklch(0.985 0 0);
-  --popover:  #040205;
+  --popover:  #08070f;
   --popover-foreground: oklch(0.985 0 0);
-  
+
   --primary: #7238F7; 
   --primary-foreground: oklch(0.985 0 0);
   --secondary: #5500FF;
   --secondary-foreground: oklch(0.985 0 0);
-  
-  --muted: #7C6F90; 
+
+  --muted: #08070f; 
   --muted-foreground: #D1C9DA;
-  --accent: #37008A;
+  --accent: #5500FF;
   --accent-foreground: oklch(0.985 0 0);
   --destructive: #F05D6C;
-  
-  
+
   --border: #1C1824; 
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  
-  /* Charts permanecem inalterados */
+
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  
-  
-  --sidebar: #040205;
+
+  --sidebar: #08070f;
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: #7238F7;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #1C1824;
+  --sidebar-accent: #5500FF;
   --sidebar-border: #1C1824;
   --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
