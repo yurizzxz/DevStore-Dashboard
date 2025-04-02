@@ -19,7 +19,6 @@ import {
   IconUsers,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
@@ -31,6 +30,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import Image from "next/image"
@@ -128,23 +128,6 @@ const data = {
       icon: IconHelp,
     },
   ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
-  ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -153,22 +136,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5 mt-3"
+            <div
+              className="p-1.5 -ml-1 mt-3"
             >
-              <Link href="/">
-                <Image src="/logo1.png" alt="Logo" width={150} height={32} />
+              <Link href="/" className="inset" aria-label="Clique para ir à Página Inicial">
+                <Image src="/logo1.png" alt="Logo DevStore" width={150} height={32} />
               </Link>
-            </SidebarMenuButton>
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+      <SidebarSeparator className="-ml-[0.5px] mt-2 mb-3.5" />
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+      <SidebarSeparator className="-ml-[0.5px]" />
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>

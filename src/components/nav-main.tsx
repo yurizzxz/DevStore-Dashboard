@@ -24,7 +24,7 @@ export function NavMain({
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col">
-      <SidebarGroupLabel>Overview</SidebarGroupLabel>
+      <SidebarGroupLabel>Visão Geral</SidebarGroupLabel>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
