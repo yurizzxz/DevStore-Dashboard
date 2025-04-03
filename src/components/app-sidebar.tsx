@@ -2,21 +2,12 @@
 
 import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
+  IconLayoutDashboard,
+  IconPackage,
   IconUsers,
+  IconUserCog,
+  IconFolder,
+  IconSettings
 } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -43,83 +34,30 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
+      url: "/",
+      icon: IconLayoutDashboard,  
     },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
+      title: "Produtos",
+      url: "/products",
+      icon: IconPackage, 
     },
     {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
+      title: "Usuários",
+      url: "/users",
+      icon: IconUsers, 
     },
     {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
+      title: "Administradores",
+      url: "/admins",
+      icon: IconUserCog, 
     },
   ],
   navSecondary: [
     {
-      title: "Settings",
+      title: "Configurações",
       url: "#",
-      icon: IconSettings,
+      icon: IconSettings, 
     },
   ],
 }
@@ -130,9 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div
-              className="p-1.5 -ml-1 mt-3"
-            >
+            <div className="p-1.5 -ml-1 mt-3">
               <Link href="/" className="inset" aria-label="Clique para ir à Página Inicial">
                 <Image src="/logo1.png" alt="Logo DevStore" width={150} height={32} />
               </Link>

@@ -31,8 +31,6 @@ export function DataTable({
 }: DataTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const formatPrice = (price: number) => formatCurrency(price);
-
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   const displayedProducts = withPagination
@@ -51,7 +49,9 @@ export function DataTable({
             <TableHead className="w-[80px]">Imagem</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>Categoria</TableHead>
-            <TableHead className="text-right">Preço</TableHead>
+            <TableHead>Promoção</TableHead>
+            <TableHead>Preço</TableHead>
+            <TableHead className="text-right">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,15 +69,23 @@ export function DataTable({
                 </TableCell>
 
                 <TableCell>{product.nome}</TableCell>
-                <TableCell>{product.category}</TableCell>
-                <TableCell className="text-right">
-                  {formatPrice(product.price)}
+                <TableCell>
+                  {product.category === 1 && "Processador"}
+                  {product.category === 2 && "Placa de Vídeo"}
+                  {product.category === 3 && "Memória RAM"}
+                  {product.category === 4 && "Notebook"}
                 </TableCell>
+
+                <TableCell>
+                  {product.category2 ? product.category : "Null"}
+                </TableCell>
+                <TableCell>{formatCurrency(product.price)}</TableCell>
+                <TableCell className="text-right">Action</TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
+              <TableCell colSpan={6} className="text-center">
                 Nenhum produto encontrado.
               </TableCell>
             </TableRow>
@@ -86,18 +94,18 @@ export function DataTable({
       </Table>
 
       {withPagination && totalPages > 1 && (
-        <div className="flex justify-end gap-1.5 mt-4">
+        <div className="flex justify-end gap-1 mt-4">
           <Button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(1)}
           >
-            <ChevronsLeft size={20} />
+            <ChevronsLeft size={23} />
           </Button>
           <Button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => prev - 1)}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={23} />
           </Button>
           <span className="flex text-sm mx-2 items-center">
             Página {currentPage} de {totalPages}
@@ -106,13 +114,13 @@ export function DataTable({
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((prev) => prev + 1)}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={23} />
           </Button>
           <Button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(totalPages)}
           >
-            <ChevronsRight size={20} />
+            <ChevronsRight size={23} />
           </Button>
         </div>
       )}

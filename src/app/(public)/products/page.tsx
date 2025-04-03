@@ -18,7 +18,7 @@ export default function Products({ categoryId }: Props) {
         <div className="@container/main flex flex-1 flex-col gap-2">
           <div className="flex px-4 lg:px-6 flex-col gap-4 py-4 md:gap-6 md:py-6">
             <HeadingTitle>Produtos</HeadingTitle>
-            <DataTable products={products} withPagination={false} />
+            <DataTable products={products} withPagination itemsPerPage={20} />
           </div>
         </div>
       </div>
