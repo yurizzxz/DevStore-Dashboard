@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Product } from "@/hooks/useProducts";
 import { Button } from "@/components/ui/buttonUi";
 import {
   ChevronLeft,
@@ -18,75 +17,121 @@ import {
 import Image from "next/image";
 import { formatCurrency } from "@/utils/formatCurrency";
 
+interface Product {
+  id: number;
+  nome: string;
+  image: string;
+  price: number;
+  category?: number;
+  category2?: number;
+}
+
+interface User {
+  id: number;
+  nome: string;
+  email: string;
+  telefone: string;
+  cpf: string;
+  cidade: string;
+  cargo: string;
+}
+
 interface DataTableProps {
-  products: Product[];
+  data: Product[] | User[];
+  type: "products" | "users";
   withPagination?: boolean;
   itemsPerPage?: number;
 }
 
 export function DataTable({
-  products,
+  data,
+  type,
   withPagination = true,
   itemsPerPage = 5,
 }: DataTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-
-  const displayedProducts = withPagination
-    ? products.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      )
-    : products;
+  const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
+  const displayedData = withPagination
+    ? data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    : data;
 
   return (
     <div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[70px]">ID</TableHead>
-            <TableHead className="w-[80px]">Imagem</TableHead>
+            <TableHead>ID</TableHead>
+            {type === "products" && <TableHead>Imagem</TableHead>}
             <TableHead>Nome</TableHead>
-            <TableHead>Categoria</TableHead>
-            <TableHead>Promoção</TableHead>
-            <TableHead>Preço</TableHead>
+            {type === "products" && <TableHead>Categoria</TableHead>}
+            {type === "products" && <TableHead>Promoção</TableHead>}
+            {type === "products" && <TableHead>Preço</TableHead>}
+            {type === "users" && <TableHead>Email</TableHead>}
+            {type === "users" && <TableHead>Telefone</TableHead>}
+            {type === "users" && <TableHead>CPF</TableHead>}
+            {type === "users" && <TableHead>Cidade</TableHead>}
+            {type === "users" && <TableHead>Cargo</TableHead>}
             <TableHead className="text-right">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {displayedProducts.length > 0 ? (
-            displayedProducts.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell className="font-medium">{product.id}</TableCell>
-                <TableCell>
-                  <Image
-                    src={product.image}
-                    alt={product.nome}
-                    width={40}
-                    height={45}
-                  />
-                </TableCell>
+          {displayedData.length > 0 ? (
+            displayedData.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="font-medium">{item.id}</TableCell>
 
-                <TableCell>{product.nome}</TableCell>
-                <TableCell>
-                  {product.category === 1 && "Processador"}
-                  {product.category === 2 && "Placa de Vídeo"}
-                  {product.category === 3 && "Memória RAM"}
-                  {product.category === 4 && "Notebook"}
-                </TableCell>
+                {type === "products" && (
+                  <TableCell>
+                    <Image
+                      src={(item as Product).image}
+                      alt={item.nome}
+                      width={40}
+                      height={45}
+                    />
+                  </TableCell>
+                )}
 
-                <TableCell>
-                  {product.category2 ? product.category : "Null"}
-                </TableCell>
-                <TableCell>{formatCurrency(product.price)}</TableCell>
-                <TableCell className="text-right">Action</TableCell>
+                <TableCell>{item.nome}</TableCell>
+
+                {type === "products" && (
+                  <TableCell>
+                    {(item as Product).category === 1 && "Processador"}
+                    {(item as Product).category === 2 && "Placa de Vídeo"}
+                    {(item as Product).category === 3 && "Memória RAM"}
+                    {(item as Product).category === 4 && "Notebook"}
+                  </TableCell>
+                )}
+
+                {type === "products" && (
+                  <TableCell>
+                    {(item as Product).category2 === 5
+                      ? "Mais Vendidos"
+                      : (item as Product).category2 === 6
+                      ? "Promoções do Dia"
+                      : (item as Product).category2 === 7
+                      ? "Promoção 1"
+                      : (item as Product).category2 || "Null"}
+                  </TableCell>
+                )}
+
+                {type === "products" && (
+                  <TableCell>{formatCurrency((item as Product).price)}</TableCell>
+                )}
+
+                {type === "users" && <TableCell>{(item as User).email}</TableCell>}
+                {type === "users" && <TableCell>{(item as User).telefone}</TableCell>}
+                {type === "users" && <TableCell>{(item as User).cpf}</TableCell>}
+                {type === "users" && <TableCell>{(item as User).cidade}</TableCell>}
+                {type === "users" && <TableCell>{(item as User).cargo}</TableCell>}
+
+                <TableCell className="text-right">Ação</TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={6} className="text-center">
-                Nenhum produto encontrado.
+              <TableCell colSpan={type === "products" ? 7 : 6}>
+                Nenhum {type === "products" ? "produto" : "usuário"} encontrado.
               </TableCell>
             </TableRow>
           )}

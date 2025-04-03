@@ -26,7 +26,7 @@ export default function Dashboard({ categoryId }: Props) {
             <div className="">
               <ChartAreaInteractive />
             </div>
-            <DataTable products={products}  itemsPerPage={7} />
+            <DataTable data={products} type="products"itemsPerPage={7} />
           </div>
         </div>
       </div>
