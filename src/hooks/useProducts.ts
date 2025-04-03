@@ -19,6 +19,7 @@ export function useProducts(categoryId: string) {
       try {
         const response = await fetch("/api/produto");
         const data = await response.json();
+        console.log(data); 
 
         const productList = data.map((product: any) => ({
           id: product.id,
