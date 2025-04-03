@@ -7,37 +7,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/buttonUi";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  Pencil,
-  Trash2,
-} from "lucide-react";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { TableActions } from "./table-actions";
+import { Pagination } from "./pagination";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/dialog";
-
-interface Product {
+export interface Product {
   id: number;
   nome: string;
   image: string;
   price: number;
+  categoryName?: string;
+  category2Name?: string;
   category?: number;
   category2?: number;
 }
 
-interface User {
+export interface User {
   id: number;
   nome: string;
   email: string;
@@ -54,6 +40,20 @@ interface DataTableProps {
   itemsPerPage?: number;
 }
 
+const getCategoryName = (categoryId?: number) => {
+  const categories: { [key: number]: string } = {
+    1: "Processador",
+    2: "Placa de Vídeo",
+    3: "Memória RAM",
+    4: "Notebook",
+    5: "Mais Vendidos",
+    6: "Promoções do Dia",
+    7: "Promoção 1",
+  };
+
+  return categories[categoryId || 0] || "Null";
+};
+
 export function DataTable({
   data,
   type,
@@ -61,7 +61,6 @@ export function DataTable({
   itemsPerPage = 5,
 }: DataTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
-
   const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
   const displayedData = withPagination
     ? data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
@@ -148,45 +147,17 @@ export function DataTable({
                   <TableCell>{(item as User).cargo}</TableCell>
                 )}
 
-                <TableCell className="text-right flex justify-end items-center gap-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button className="cursor-pointer">
-                        <Pencil className="size-4.5" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Editar Item</DialogTitle>
-                        <DialogDescription>
-                          Faça as alterações necessárias e salve.
-                        </DialogDescription>
-                      </DialogHeader>
-                      {/* Coloque os campos do formulário aqui */}
-                    </DialogContent>
-                  </Dialog>
-
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button className="cursor-pointer bg-card hover:bg-[#f50000]">
-                        <Trash2 className="size-4.5" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Tem certeza?</DialogTitle>
-                        <DialogDescription>
-                          Esta ação não pode ser desfeita.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="flex justify-end gap-2">
-                        <Button variant="outline">Cancelar</Button>
-                        <Button className="bg-[#f50000] text-white">
-                          Excluir
-                        </Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                <TableCell className="text-right">
+                  <TableActions
+                    item={{
+                      ...item,
+                      categoryName: getCategoryName((item as Product).category),
+                      category2Name: getCategoryName(
+                        (item as Product).category2
+                      ),
+                    }}
+                    type={type}
+                  />
                 </TableCell>
               </TableRow>
             ))
@@ -200,36 +171,12 @@ export function DataTable({
         </TableBody>
       </Table>
 
-      {withPagination && totalPages > 1 && (
-        <div className="flex justify-end gap-1 mt-4">
-          <Button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(1)}
-          >
-            <ChevronsLeft size={23} />
-          </Button>
-          <Button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((prev) => prev - 1)}
-          >
-            <ChevronLeft size={23} />
-          </Button>
-          <span className="flex text-sm mx-2 items-center">
-            Página {currentPage} de {totalPages}
-          </span>
-          <Button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-          >
-            <ChevronRight size={23} />
-          </Button>
-          <Button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(totalPages)}
-          >
-            <ChevronsRight size={23} />
-          </Button>
-        </div>
+      {withPagination && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
       )}
     </div>
   );
