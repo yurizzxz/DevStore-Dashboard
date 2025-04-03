@@ -13,9 +13,20 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Pencil,
+  Trash2,
 } from "lucide-react";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/formatCurrency";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/dialog";
 
 interface Product {
   id: number;
@@ -116,16 +127,67 @@ export function DataTable({
                 )}
 
                 {type === "products" && (
-                  <TableCell>{formatCurrency((item as Product).price)}</TableCell>
+                  <TableCell>
+                    {formatCurrency((item as Product).price)}
+                  </TableCell>
                 )}
 
-                {type === "users" && <TableCell>{(item as User).email}</TableCell>}
-                {type === "users" && <TableCell>{(item as User).telefone}</TableCell>}
-                {type === "users" && <TableCell>{(item as User).cpf}</TableCell>}
-                {type === "users" && <TableCell>{(item as User).cidade}</TableCell>}
-                {type === "users" && <TableCell>{(item as User).cargo}</TableCell>}
+                {type === "users" && (
+                  <TableCell>{(item as User).email}</TableCell>
+                )}
+                {type === "users" && (
+                  <TableCell>{(item as User).telefone}</TableCell>
+                )}
+                {type === "users" && (
+                  <TableCell>{(item as User).cpf}</TableCell>
+                )}
+                {type === "users" && (
+                  <TableCell>{(item as User).cidade}</TableCell>
+                )}
+                {type === "users" && (
+                  <TableCell>{(item as User).cargo}</TableCell>
+                )}
 
-                <TableCell className="text-right">Ação</TableCell>
+                <TableCell className="text-right flex justify-end items-center gap-2">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="cursor-pointer">
+                        <Pencil className="size-4.5" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Editar Item</DialogTitle>
+                        <DialogDescription>
+                          Faça as alterações necessárias e salve.
+                        </DialogDescription>
+                      </DialogHeader>
+                      {/* Coloque os campos do formulário aqui */}
+                    </DialogContent>
+                  </Dialog>
+
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="cursor-pointer bg-card hover:bg-[#f50000]">
+                        <Trash2 className="size-4.5" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Tem certeza?</DialogTitle>
+                        <DialogDescription>
+                          Esta ação não pode ser desfeita.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex justify-end gap-2">
+                        <Button variant="outline">Cancelar</Button>
+                        <Button className="bg-[#f50000] text-white">
+                          Excluir
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </TableCell>
               </TableRow>
             ))
           ) : (

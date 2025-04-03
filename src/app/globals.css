@@ -16,6 +16,8 @@
   --color-purple-bold: #5500FF;
   --color-purple-hover: #37008A;
 
+  --color-black: #000;
+
   --color-danger: #F05D6C;
 
   --color-gray-100: #E5DBF3;
@@ -72,7 +74,7 @@
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: #5500FF;
   --sidebar-border: #1C1824;
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: #5500FF;
   --sidebar-accent-foreground: oklch(0.985 0 0);
 }
 

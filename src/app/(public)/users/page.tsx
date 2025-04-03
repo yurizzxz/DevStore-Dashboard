@@ -1,9 +1,9 @@
 'use client'
-import { SiteHeader } from "@/components/site-header";
+import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarInset } from "@/components/ui/sidebar";
 
 import HeadingTitle from "@/components/ui/heading";
-import { DataTable } from "@/components/data-table";
+import { DataTable } from "@/components/table/data-table";
 import { useUsers } from "@/hooks/useUsers";
 
 export default function Products() {
