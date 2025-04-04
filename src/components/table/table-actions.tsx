@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/dialog";
 import { Button } from "@/components/ui/buttonUi";
 import { Pencil, Trash2 } from "lucide-react";
@@ -20,7 +21,6 @@ interface TableActionsProps {
 export function TableActions({ item, type }: TableActionsProps) {
   return (
     <div className="flex justify-end items-center gap-2">
-      {/* Botão de Edição */}
       <Dialog>
         <DialogTrigger asChild>
           <Button className="cursor-pointer">
@@ -58,7 +58,6 @@ export function TableActions({ item, type }: TableActionsProps) {
               <Input
                 type="text"
                 defaultValue={(item as Product).category2Name}
-                readOnly
               />
             </>
           )}
@@ -66,13 +65,23 @@ export function TableActions({ item, type }: TableActionsProps) {
           {type === "users" && (
             <>
               <Label className="-mb-1.5">Nome</Label>
-              <Input type="text" defaultValue={(item as User).nome} />
+              <Input className="h-11" type="text" defaultValue={(item as User).nome} />
               <Label className="-mb-1.5">Email</Label>
-              <Input type="email" defaultValue={(item as User).email} />
+              <Input className="h-11" type="email" defaultValue={(item as User).email} />
+              <Label className="-mb-1.5">CPF</Label>
+              <Input className="h-11" type="email" defaultValue={(item as User).cpf} />
               <Label className="-mb-1.5">Telefone</Label>
-              <Input type="text" defaultValue={(item as User).telefone} />
+              <Input className="h-11" type="text" defaultValue={(item as User).telefone} />
+              <Label className="-mb-1.5">Cidade</Label>
+              <Input className="h-11" type="text" defaultValue={(item as User).cidade} />
+              <Label className="-mb-1.5">Cargo</Label>
+              <Input className="h-11" type="text" defaultValue={(item as User).cargo} />
             </>
           )}
+          <DialogFooter>
+            <Button className="text-white">Salvar</Button>
+            <Button variant="outline">Cancelar</Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
@@ -90,8 +99,8 @@ export function TableActions({ item, type }: TableActionsProps) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
-            <Button variant="outline">Cancelar</Button>
             <Button className="bg-[#f50000] text-white">Excluir</Button>
+            <Button variant="outline">Cancelar</Button>
           </div>
         </DialogContent>
       </Dialog>
