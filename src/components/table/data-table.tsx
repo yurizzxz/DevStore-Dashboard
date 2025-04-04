@@ -162,8 +162,8 @@ export function DataTable({
               </TableRow>
             ))
           ) : (
-            <TableRow>
-              <TableCell colSpan={type === "products" ? 7 : 6}>
+            <TableRow className="mt-5">
+              <TableCell  colSpan={type === "products" ? 7 : 6}>
                 Nenhum {type === "products" ? "produto" : "usuário"} encontrado.
               </TableCell>
             </TableRow>
