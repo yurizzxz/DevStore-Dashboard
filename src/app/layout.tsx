@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { SidebarProvider} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { Toaster } from "@/components/ui/sonner"; 
 
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
             <div className="flex flex-1 flex-col pt-5 gap-4 px-0 ">
               <div className=" min-h-[100vh] flex-1 rounded-xl md:min-h-min">                
                 {children}
+                <Toaster />
               </div>
             </div>
           </main>

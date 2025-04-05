@@ -1,53 +1,86 @@
 "use client";
 
+import React, { useState } from "react";
 import { Button } from "@/components/ui/buttonUi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 export function RegisterForm() {
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    password: "",
+    telefone: "",
+    cpf: "",
+    rua: "",
+    cidade: "",
+    estado: "",
+    cep: "",
+    cargo: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/user", {
+      method: "POST",
+      body: JSON.stringify(formData),
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      toast.success("Usuário cadastrado com sucesso!");
+    } else {
+      toast.error("Erro ao cadastrar: " + result.error);
+    }
+  };
 
   return (
     <>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <div className="flex flex-col gap-2">
             <Label>Nome</Label>
-            <Input type="text" className="h-11" placeholder="Nome completo" />
+            <Input name="nome" type="text" className="h-11" placeholder="Nome completo" onChange={handleChange} />
 
             <Label>Email</Label>
-            <Input className="h-11" type="email" placeholder="Email" />
+            <Input name="email" type="email" className="h-11" placeholder="Email" onChange={handleChange} />
 
             <Label>Senha</Label>
-            <Input className="h-11" type="password" placeholder="Senha" />
+            <Input name="password" type="password" className="h-11" placeholder="Senha" onChange={handleChange} />
 
             <Label>Telefone</Label>
-            <Input type="text" className="h-11" placeholder="Telefone" />
+            <Input name="telefone" type="text" className="h-11" placeholder="Telefone" onChange={handleChange} />
 
             <Label>CPF</Label>
-            <Input type="text" className="h-11" placeholder="CPF" />
+            <Input name="cpf" type="text" className="h-11" placeholder="CPF" onChange={handleChange} />
           </div>
 
           <div className="flex flex-col gap-2">
             <Label>Rua</Label>
-            <Input type="text" className="h-11" placeholder="Rua" />
+            <Input name="rua" type="text" className="h-11" placeholder="Rua" onChange={handleChange} />
 
             <Label>Cidade</Label>
-            <Input type="text" className="h-11" placeholder="Cidade" />
+            <Input name="cidade" type="text" className="h-11" placeholder="Cidade" onChange={handleChange} />
 
             <Label>Estado</Label>
-            <Input type="text" className="h-11" placeholder="Estado" />
+            <Input name="estado" type="text" className="h-11" placeholder="Estado" onChange={handleChange} />
 
             <Label>CEP</Label>
-            <Input type="text" className="h-11" placeholder="CEP" />
+            <Input name="cep" type="text" className="h-11" placeholder="CEP" onChange={handleChange} />
 
             <Label>Cargo</Label>
-            <Input type="text" className="h-11" placeholder="Cargo" />
+            <Input name="cargo" type="text" className="h-11" placeholder="Cargo" onChange={handleChange} />
           </div>
         </div>
 
         <Button type="submit">Cadastrar</Button>
       </form>
-
     </>
   );
 }
