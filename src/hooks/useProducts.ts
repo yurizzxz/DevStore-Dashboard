@@ -6,6 +6,7 @@ export interface Product {
   description: string;
   price: number;
   image: string;
+  estoque: number;
   category: number;
   specifications: string;
   category2: number;
@@ -28,6 +29,7 @@ export function useProducts(categoryId: string) {
           specifications: product.specifications,
           price: product.preco,
           category: product.categoriaId,
+          estoque: product.estoque,
           image: product.foto,
           category2: product.categoriaId2,
         }));

@@ -15,8 +15,10 @@ import { Pagination } from "./pagination";
 export interface Product {
   id: number;
   nome: string;
+  specifications: string;
   image: string;
   price: number;
+  estoque: number;
   categoryName?: string;
   category2Name?: string;
   category?: number;
@@ -27,6 +29,7 @@ export interface User {
   id: number;
   nome: string;
   email: string;
+
   telefone: string;
   cpf: string;
   cidade: string;
@@ -71,11 +74,13 @@ export function DataTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>ID</TableHead>
-            {type === "products" && <TableHead>Imagem</TableHead>}
-            <TableHead>Nome</TableHead>
-            {type === "products" && <TableHead>Categoria</TableHead>}
-            {type === "products" && <TableHead>Promoção</TableHead>}
+            <TableHead className="w-10">ID</TableHead>
+            {type === "products" && <TableHead className="w-15">Img</TableHead>}
+            <TableHead className="w-50">Nome</TableHead>
+            {type === "products" && <TableHead  className="w-35">Especificações</TableHead>}
+            {type === "products" && <TableHead className="w-33">Categoria</TableHead>}
+            {type === "products" && <TableHead className="w-42">Promoção</TableHead>}
+            {type === "products" && <TableHead className="w-30">Estoque</TableHead>}
             {type === "products" && <TableHead>Preço</TableHead>}
             {type === "users" && <TableHead>Email</TableHead>}
             {type === "users" && <TableHead>Telefone</TableHead>}
@@ -96,39 +101,46 @@ export function DataTable({
                     <Image
                       src={(item as Product).image}
                       alt={item.nome}
-                      width={40}
-                      height={45}
+                      width={35}
+                      height={35}
                     />
                   </TableCell>
                 )}
 
-                <TableCell>{item.nome}</TableCell>
+                <TableCell>
+                  {item.nome.length > 10
+                    ? item.nome.slice(0, 15) + "..."
+                    : item.nome}
+                </TableCell>
 
                 {type === "products" && (
-                  <TableCell>
-                    {(item as Product).category === 1 && "Processador"}
-                    {(item as Product).category === 2 && "Placa de Vídeo"}
-                    {(item as Product).category === 3 && "Memória RAM"}
-                    {(item as Product).category === 4 && "Notebook"}
-                  </TableCell>
-                )}
+                  <>
+                    <TableCell>
+                      {(item as Product).specifications.length > 10
+                        ? (item as Product).specifications.slice(0, 10) + "..."
+                        : (item as Product).specifications}
+                    </TableCell>
 
-                {type === "products" && (
-                  <TableCell>
-                    {(item as Product).category2 === 5
-                      ? "Mais Vendidos"
-                      : (item as Product).category2 === 6
-                      ? "Promoções do Dia"
-                      : (item as Product).category2 === 7
-                      ? "Promoção 1"
-                      : (item as Product).category2 || "Null"}
-                  </TableCell>
-                )}
-
-                {type === "products" && (
-                  <TableCell>
-                    {formatCurrency((item as Product).price)}
-                  </TableCell>
+                    <TableCell>
+                      {(item as Product).category === 1 && "Processador"}
+                      {(item as Product).category === 2 && "Placa de Vídeo"}
+                      {(item as Product).category === 3 && "Memória RAM"}
+                      {(item as Product).category === 4 && "Notebook"}
+                    </TableCell>
+                    <TableCell>
+                      {(item as Product).category2 === 5
+                        ? "Mais Vendidos"
+                        : (item as Product).category2 === 6
+                        ? "Promoções do Dia"
+                        : (item as Product).category2 === 7
+                        ? "Promoção 1"
+                        : (item as Product).category2 || "Null"}
+                    </TableCell>
+                    <TableCell>{(item as Product).estoque}</TableCell>
+                    <TableCell>
+                      {formatCurrency((item as Product).price)}
+                    </TableCell>
+                  </>
                 )}
 
                 {type === "users" && (
@@ -163,7 +175,7 @@ export function DataTable({
             ))
           ) : (
             <TableRow className="mt-5">
-              <TableCell  colSpan={type === "products" ? 7 : 6}>
+              <TableCell colSpan={type === "products" ? 7 : 6}>
                 Nenhum {type === "products" ? "produto" : "usuário"} encontrado.
               </TableCell>
             </TableRow>

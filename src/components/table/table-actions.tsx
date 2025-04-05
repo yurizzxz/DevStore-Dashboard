@@ -20,11 +20,11 @@ interface TableActionsProps {
 }
 export function TableActions({ item, type }: TableActionsProps) {
   return (
-    <div className="flex justify-end items-center gap-2">
+    <div className="flex justify-end items-center gap-1">
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="cursor-pointer">
-            <Pencil className="size-4.5" />
+          <Button className="cursor-pointer w-8 h-8">
+            <Pencil className="size-4" />
           </Button>
         </DialogTrigger>
         <DialogContent>
@@ -41,6 +41,8 @@ export function TableActions({ item, type }: TableActionsProps) {
             <>
               <Label className="-mb-1.5">Nome</Label>
               <Input type="text" defaultValue={(item as Product).nome} />
+              <Label className="-mb-1.5">Especificações</Label>
+              <Input type="text" defaultValue={(item as Product).specifications} />
 
               <Label className="-mb-1.5">Preço</Label>
               <Input
@@ -49,7 +51,7 @@ export function TableActions({ item, type }: TableActionsProps) {
               />
 
               <Label className="-mb-1.5">Categoria</Label>
-              <Input
+              <Input  
                 type="text"
                 defaultValue={(item as Product).categoryName}
                 readOnly
@@ -87,8 +89,8 @@ export function TableActions({ item, type }: TableActionsProps) {
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="cursor-pointer bg-card hover:bg-[#f50000]">
-            <Trash2 className="size-4.5" />
+          <Button variant="outline" className="cursor-pointer w-8 h-8 hover:bg-[#f50000]">
+            <Trash2 className="size" />
           </Button>
         </DialogTrigger>
         <DialogContent>
