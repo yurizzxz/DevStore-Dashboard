@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function useUserActions() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -18,6 +20,32 @@ export function useUserActions() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const createUser = async (e: React.FormEvent) => {
+      e.preventDefault();
+    
+      try {
+        const res = await fetch("/api/user", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+    
+        const result = await res.json();
+    
+        if (!res.ok) {
+          throw new Error(result.error || "Erro desconhecido");
+        }
+  
+        router.push("/users");
+    
+        toast.success("Usuário cadastrado com sucesso!");
+      } catch (error: any) {
+        toast.error("Erro ao cadastrar: " + error.message);
+      }
+    };
 
   const deleteUser = async (id: unknown) => {
     try {
@@ -77,6 +105,7 @@ export function useUserActions() {
 
   return {
     formData,
+    createUser,
     handleChange,
     deleteUser,
     updateUser,

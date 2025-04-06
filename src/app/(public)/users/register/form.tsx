@@ -4,53 +4,10 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/buttonUi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useUserActions } from "@/hooks/useUserActions"; 
 
 export function RegisterForm() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    password: "",
-    telefone: "",
-    cpf: "",
-    rua: "",
-    cidade: "",
-    estado: "",
-    cep: "",
-    cargo: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const createUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-  
-    try {
-      const res = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      const result = await res.json();
-  
-      if (!res.ok) {
-        throw new Error(result.error || "Erro desconhecido");
-      }
-
-      router.push("/users");
-  
-      toast.success("Usuário cadastrado com sucesso!");
-    } catch (error: any) {
-      toast.error("Erro ao cadastrar: " + error.message);
-    }
-  };
+  const { createUser, handleChange } = useUserActions();
   
   return (
     <>

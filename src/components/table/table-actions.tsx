@@ -22,7 +22,7 @@ interface TableActionsProps {
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
-  const { formData, handleChange, deleteUser, updateUser } = useUserActions();
+  const {  handleChange, deleteUser, updateUser } = useUserActions();
 
   return (
     <div className="flex justify-end items-center gap-1">
