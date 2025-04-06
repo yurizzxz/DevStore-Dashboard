@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/buttonUi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -24,25 +26,35 @@ export function RegisterForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const createUser = async (e: React.FormEvent) => {
     e.preventDefault();
+  
+    try {
+      const res = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await res.json();
+  
+      if (!res.ok) {
+        throw new Error(result.error || "Erro desconhecido");
+      }
 
-    const res = await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    });
-
-    const result = await res.json();
-    if (res.ok) {
+      router.push("/users");
+  
       toast.success("Usuário cadastrado com sucesso!");
-    } else {
-      toast.error("Erro ao cadastrar: " + result.error);
+    } catch (error: any) {
+      toast.error("Erro ao cadastrar: " + error.message);
     }
   };
-
+  
   return (
     <>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4" onSubmit={createUser}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <div className="flex flex-col gap-2">
             <Label>Nome</Label>
