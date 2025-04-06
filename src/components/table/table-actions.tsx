@@ -1,3 +1,4 @@
+'use client';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +16,7 @@ import { Product, User } from "./data-table";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 interface TableActionsProps {
   item: Product | User;
   type: "products" | "users";
@@ -56,14 +57,12 @@ export function TableActions({ item, type }: TableActionsProps) {
         throw new Error(result.error || "Erro desconhecido");
       }
 
-      router.refresh();
+      window.location.reload();
 
       toast.success("Usuário excluido com sucesso!");
     } catch (err: any) {
       toast.error("Erro ao deletar usuário:" + err.message);
     }
-
-
   };
   const updateUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +70,7 @@ export function TableActions({ item, type }: TableActionsProps) {
     const updatedFields = Object.fromEntries(
       Object.entries(formData).filter(([_, value]) => value.trim() !== "")
     );
-  
+
     if (Object.keys(updatedFields).length === 0) {
       toast.warning("Nenhum dado alterado.");
       return;
@@ -92,13 +91,12 @@ export function TableActions({ item, type }: TableActionsProps) {
         throw new Error(result.error || "Erro desconhecido");
       }
 
-      router.refresh();
+      window.location.reload();
 
       toast.success("Usuário atualizado com sucesso!");
     } catch (err: any) {
       toast.error("Erro ao cadastrar: " + err.message);
     }
-
   };
 
   return (
@@ -158,19 +156,21 @@ export function TableActions({ item, type }: TableActionsProps) {
               <Input
                 className="h-11"
                 type="text"
+                name="nome"
                 onChange={handleChange}
                 defaultValue={(item as User).nome}
               />
               <Label className="-mb-1.5">Email</Label>
               <Input
                 className="h-11"
+                name="email"
                 type="email"
                 defaultValue={(item as User).email}
               />
               <Label className="-mb-1.5">CPF</Label>
               <Input
                 className="h-11"
-                type="email"
+                name="cpf"
                 onChange={handleChange}
                 defaultValue={(item as User).cpf}
               />
@@ -178,6 +178,7 @@ export function TableActions({ item, type }: TableActionsProps) {
               <Input
                 className="h-11"
                 type="text"
+                name="telefone"
                 onChange={handleChange}
                 defaultValue={(item as User).telefone}
               />
@@ -185,6 +186,7 @@ export function TableActions({ item, type }: TableActionsProps) {
               <Input
                 className="h-11"
                 type="text"
+                name="cidade"
                 onChange={handleChange}
                 defaultValue={(item as User).cidade}
               />
@@ -192,6 +194,7 @@ export function TableActions({ item, type }: TableActionsProps) {
               <Input
                 className="h-11"
                 type="text"
+                name="cargo"
                 onChange={handleChange}
                 defaultValue={(item as User).cargo}
               />
@@ -222,7 +225,9 @@ export function TableActions({ item, type }: TableActionsProps) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
-          <Button variant="destructive" onClick={() => deleteUser(item.id)}>Excluir</Button>
+            <Button variant="destructive" onClick={() => deleteUser(item.id)}>
+              Excluir
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
