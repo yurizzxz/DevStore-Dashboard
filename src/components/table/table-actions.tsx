@@ -14,90 +14,15 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Product, User } from "./data-table";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useUserActions } from "@/hooks/useUserActions"; 
+
 interface TableActionsProps {
   item: Product | User;
   type: "products" | "users";
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    password: "",
-    telefone: "",
-    cpf: "",
-    rua: "",
-    cidade: "",
-    estado: "",
-    cep: "",
-    cargo: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const deleteUser = async (id: unknown) => {
-    try {
-      const res = await fetch("/api/user", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        throw new Error(result.error || "Erro desconhecido");
-      }
-
-      window.location.reload();
-
-      toast.success("Usuário excluido com sucesso!");
-    } catch (err: any) {
-      toast.error("Erro ao deletar usuário:" + err.message);
-    }
-  };
-  const updateUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const updatedFields = Object.fromEntries(
-      Object.entries(formData).filter(([_, value]) => value.trim() !== "")
-    );
-
-    if (Object.keys(updatedFields).length === 0) {
-      toast.warning("Nenhum dado alterado.");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/user", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...updatedFields, id: (item as User).id }),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        throw new Error(result.error || "Erro desconhecido");
-      }
-
-      window.location.reload();
-
-      toast.success("Usuário atualizado com sucesso!");
-    } catch (err: any) {
-      toast.error("Erro ao cadastrar: " + err.message);
-    }
-  };
+  const { formData, handleChange, deleteUser, updateUser } = useUserActions();
 
   return (
     <div className="flex justify-end items-center gap-1">
@@ -126,25 +51,20 @@ export function TableActions({ item, type }: TableActionsProps) {
                 type="text"
                 defaultValue={(item as Product).specifications}
               />
-
               <Label className="-mb-1.5">Preço</Label>
               <Input
                 type="text"
-                onChange={handleChange}
                 defaultValue={formatCurrency((item as Product).price)}
               />
-
               <Label className="-mb-1.5">Categoria</Label>
               <Input
                 type="text"
-                onChange={handleChange}
                 defaultValue={(item as Product).categoryName}
                 readOnly
               />
               <Label className="-mb-1.5">Promoção</Label>
               <Input
                 type="text"
-                onChange={handleChange}
                 defaultValue={(item as Product).category2Name}
               />
             </>
@@ -201,7 +121,10 @@ export function TableActions({ item, type }: TableActionsProps) {
             </>
           )}
           <DialogFooter>
-            <Button onClick={updateUser} className="text-white">
+            <Button
+              onClick={(e) => updateUser(e, (item as User).id)}
+              className="text-white"
+            >
               Salvar Alterações
             </Button>
           </DialogFooter>
