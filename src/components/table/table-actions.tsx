@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,8 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Product, User } from "./data-table";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { useUserActions } from "@/hooks/useUserActions"; 
+import { useUserActions } from "@/hooks/useUserActions";
+import { useProductActions } from "@/hooks/useProductActions";
 
 interface TableActionsProps {
   item: Product | User;
@@ -22,7 +23,16 @@ interface TableActionsProps {
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
-  const {  handleChange, deleteUser, updateUser } = useUserActions();
+  const {
+    handleChange: handleUserChange,
+    deleteUser,
+    updateUser,
+  } = useUserActions();
+  const {
+    deleteProduct,
+    updateProduct,
+    handleChange: handleProductChange,
+  } = useProductActions();
 
   return (
     <div className="flex justify-end items-center gap-1">
@@ -45,26 +55,43 @@ export function TableActions({ item, type }: TableActionsProps) {
           {type === "products" && (
             <>
               <Label className="-mb-1.5">Nome</Label>
-              <Input type="text" defaultValue={(item as Product).nome} />
+              <Input
+                name="nome"
+                onChange={handleProductChange}
+                className="h-11"
+                type="text"
+                defaultValue={(item as Product).nome}
+              />
               <Label className="-mb-1.5">Especificações</Label>
               <Input
                 type="text"
+                name="specifications"
+                onChange={handleProductChange}
                 defaultValue={(item as Product).specifications}
               />
               <Label className="-mb-1.5">Preço</Label>
               <Input
                 type="text"
+                name="price"
+                onChange={handleProductChange}
+                className="h-11"
                 defaultValue={formatCurrency((item as Product).price)}
               />
               <Label className="-mb-1.5">Categoria</Label>
               <Input
                 type="text"
+                name="categoryName"
+                onChange={handleProductChange}
+                className="h-11"
                 defaultValue={(item as Product).categoryName}
                 readOnly
               />
               <Label className="-mb-1.5">Promoção</Label>
               <Input
                 type="text"
+                name="category2Name"
+                onChange={handleProductChange}
+                className="h-11"
                 defaultValue={(item as Product).category2Name}
               />
             </>
@@ -77,7 +104,7 @@ export function TableActions({ item, type }: TableActionsProps) {
                 className="h-11"
                 type="text"
                 name="nome"
-                onChange={handleChange}
+                onChange={handleUserChange}
                 defaultValue={(item as User).nome}
               />
               <Label className="-mb-1.5">Email</Label>
@@ -91,7 +118,7 @@ export function TableActions({ item, type }: TableActionsProps) {
               <Input
                 className="h-11"
                 name="cpf"
-                onChange={handleChange}
+                onChange={handleUserChange}
                 defaultValue={(item as User).cpf}
               />
               <Label className="-mb-1.5">Telefone</Label>
@@ -99,7 +126,7 @@ export function TableActions({ item, type }: TableActionsProps) {
                 className="h-11"
                 type="text"
                 name="telefone"
-                onChange={handleChange}
+                onChange={handleUserChange}
                 defaultValue={(item as User).telefone}
               />
               <Label className="-mb-1.5">Cidade</Label>
@@ -107,7 +134,7 @@ export function TableActions({ item, type }: TableActionsProps) {
                 className="h-11"
                 type="text"
                 name="cidade"
-                onChange={handleChange}
+                onChange={handleUserChange}
                 defaultValue={(item as User).cidade}
               />
               <Label className="-mb-1.5">Cargo</Label>
@@ -115,14 +142,18 @@ export function TableActions({ item, type }: TableActionsProps) {
                 className="h-11"
                 type="text"
                 name="cargo"
-                onChange={handleChange}
+                onChange={handleUserChange}
                 defaultValue={(item as User).cargo}
               />
             </>
           )}
           <DialogFooter>
             <Button
-              onClick={(e) => updateUser(e, (item as User).id)}
+              onClick={(e) =>
+                type === "users"
+                  ? updateUser(e, (item as User).id)
+                  : updateProduct(e, (item as Product).id)
+              }
               className="text-white"
             >
               Salvar Alterações
@@ -148,7 +179,15 @@ export function TableActions({ item, type }: TableActionsProps) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
-            <Button variant="destructive" onClick={() => deleteUser(item.id)}>
+          <Button
+              onClick={() =>
+                type === "users"
+                  ? deleteUser((item as User).id)
+                  : deleteProduct((item as Product).id)
+              }
+              className="text-white"
+              variant={"destructive"}
+            >
               Excluir
             </Button>
           </div>

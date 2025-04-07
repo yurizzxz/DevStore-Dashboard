@@ -16,49 +16,66 @@ export async function getProducts() {
 }
 
 async function createProduct(req) {
-  let connection
-  try {
-    const data = await req.json()
-    const {
-      nome,
-      description,
-      foto,
-      categoriaId,
-      specifications,
-      preco,
-      estrelas,
-      categoriaId2,
-      estoque,
-    } = data
-
-    connection = await getConnection()
-    const [result] = await connection.query(
-      `INSERT INTO produto (nome, description, foto, categoriaId, specifications, preco, estrelas, categoriaId2, estoque)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        nome,
-        description,
-        foto,
-        categoriaId,
-        specifications,
-        preco,
-        estrelas,
-        categoriaId2,
-        estoque,
-      ]
-    )
-
-    return NextResponse.json({
-      message: 'Produto cadastrado!',
-      id: result.insertId,
-    })
-  } catch (error) {
-    console.error(error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
-  } finally {
-    if (connection) connection.release()
+	let connection;
+	try {
+	  const data = await req.json();
+	  const {
+		nome,
+		description,
+		foto,
+		categoriaId,
+		specifications,
+		preco,
+		estrelas,
+		categoriaId2,
+		estoque,
+	  } = data;
+  
+	  connection = await getConnection();
+  
+	  const fields = [
+		'nome',
+		'description',
+		'foto',
+		'categoriaId',
+		'specifications',
+		'preco',
+		'estrelas',
+		'estoque',
+	  ];
+	  const values = [
+		nome,
+		description,
+		foto,
+		categoriaId,
+		specifications,
+		preco,
+		estrelas,
+		estoque,
+	  ];
+  
+	  if (categoriaId2 && categoriaId2 !== "") {
+		fields.push('categoriaId2');
+		values.push(categoriaId2);
+	  }
+  
+	  const placeholders = fields.map(() => '?').join(', ');
+	  const query = `INSERT INTO produto (${fields.join(', ')}) VALUES (${placeholders})`;
+  
+	  const [result] = await connection.query(query, values);
+  
+	  return NextResponse.json({
+		message: 'Produto cadastrado!',
+		id: result.insertId,
+	  });
+	} catch (error) {
+	  console.error(error);
+	  return NextResponse.json({ error: error.message }, { status: 500 });
+	} finally {
+	  if (connection) connection.release();
+	}
   }
-}
+  
 
 async function updateProduct(req) {
   let connection

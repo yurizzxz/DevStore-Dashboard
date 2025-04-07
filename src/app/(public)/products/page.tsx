@@ -21,7 +21,7 @@ export default function Products({ categoryId }: Props) {
             <div className="flex items-center justify-between">
               <HeadingTitle>Produtos</HeadingTitle>
               <Link href="/products/register">
-                <Button>Adicionar Usuário</Button>
+                <Button>Adicionar Produto</Button>
               </Link>
             </div>
             <DataTable
