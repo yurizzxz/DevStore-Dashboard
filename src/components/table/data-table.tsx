@@ -39,6 +39,7 @@ export interface Category {
   id: number;
   nome: string;
   description: string;
+  promotion?: boolean;
 }
 
 interface Column<T> {
@@ -147,6 +148,11 @@ const tableConfigs = {
       key: "description",
       label: "Descrição",
       render: (item: Category) => item.description,
+    },
+    {
+      key: "promotion",
+      label: "Promoção",
+      render: (item: Category) => item.promotion,
     }
   ] as Column<Category>[],
 };

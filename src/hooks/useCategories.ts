@@ -4,6 +4,7 @@ export interface Category {
   id: number;
   nome: string;
   description: string;
+  promotion?: boolean
 }
 
 export function useCategories() {
@@ -20,6 +21,7 @@ export function useCategories() {
           id: item.id,
           nome: item.nome,
           description: item.description,
+          promotion: item.promotion
         }));
 
         setCategories(categoryList);

@@ -9,6 +9,7 @@ export function useCategoryActions() {
   const [formData, setFormData] = useState({
     nome: "",
     description: "",
+    promotion: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +70,10 @@ export function useCategoryActions() {
     e.preventDefault();
 
     const updatedFields = Object.fromEntries(
-      Object.entries(formData).filter(([_, value]) => value.trim() !== "")
+      Object.entries(formData).filter(([_, value]) => {
+        if (typeof value === "string") return value.trim() !== "";
+        return value;
+      })
     );
 
     if (Object.keys(updatedFields).length === 0) {

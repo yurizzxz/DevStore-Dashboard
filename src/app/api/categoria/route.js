@@ -19,14 +19,14 @@ async function createCategoria(req) {
   let connection
   try {
     const data = await req.json()
-    const { nome, description } = data
+    const { nome, description, promotion } = data
 
     if (!nome) {
       return NextResponse.json({ error: 'O campo "nome" é obrigatório.' }, { status: 400 })
     }
 
     connection = await getConnection()
-    const [result] = await connection.query('INSERT INTO categoria (nome, description) VALUES (?, ?)', [nome,  description])
+    const [result] = await connection.query('INSERT INTO categoria (nome, description, promotion) VALUES (?, ?, ?)', [nome,  description, promotion])
 
     return NextResponse.json({
       message: 'Categoria cadastrada!',
@@ -44,14 +44,14 @@ async function updateCategoria(req) {
   let connection
   try {
     const data = await req.json()
-    const { id, nome, description } = data
+    const { id, nome, description, promotion } = data
     const categoriaId = Number(id)
 
     if (!categoriaId || isNaN(categoriaId)) {
       return NextResponse.json({ error: 'ID inválido.' }, { status: 400 })
     }
 
-    if (!nome && !description) {
+    if (!nome && !description && typeof promotion === 'undefined') {
       return NextResponse.json({ error: 'Nenhum dado enviado para atualizar.' }, { status: 400 })
     }
 
@@ -68,6 +68,10 @@ async function updateCategoria(req) {
     if (description) {
       campos.push('description=?')
       valores.push(description)
+    }
+    if (promotion) {
+      campos.push('promotion=?')
+      valores.push(promotion)
     }
 
     valores.push(categoriaId)

@@ -5,9 +5,7 @@ import {
   IconLayoutDashboard,
   IconPackage,
   IconUsers,
-  IconUserCog,
   IconSettings,
-  IconDiscount,
   IconBrowser,
   IconShoppingCart,
   IconFolders
@@ -61,19 +59,9 @@ const data = {
       icon: IconUsers, 
     },
     {
-      title: "Administradores",
-      url: "/admins",
-      icon: IconUserCog, 
-    },
-    {
       title: "Categorias",
       url: "/categories",
       icon: IconFolders, 
-    },
-    {
-      title: "Promoções",
-      url: "/promotions",
-      icon: IconDiscount, 
     },
 
   ],

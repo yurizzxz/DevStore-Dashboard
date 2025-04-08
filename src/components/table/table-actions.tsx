@@ -76,6 +76,14 @@ export function TableActions({ item, type }: TableActionsProps) {
                 className="h-11"
                 defaultValue={(item as Category).description}
               />
+              <Label className="-mb-1.5">Promoção</Label>
+              <Input
+                type="text"
+                name="promotion"
+                onChange={handleCategoryChange}
+                className="h-11"
+                defaultChecked={(item as Category).promotion}
+              />
             </>
           )}
 
