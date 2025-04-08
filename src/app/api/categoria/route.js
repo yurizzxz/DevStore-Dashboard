@@ -19,14 +19,14 @@ async function createCategoria(req) {
   let connection
   try {
     const data = await req.json()
-    const { nome } = data
+    const { nome, description } = data
 
     if (!nome) {
       return NextResponse.json({ error: 'O campo "nome" é obrigatório.' }, { status: 400 })
     }
 
     connection = await getConnection()
-    const [result] = await connection.query('INSERT INTO categoria (nome) VALUES (?)', [nome])
+    const [result] = await connection.query('INSERT INTO categoria (nome, description) VALUES (?, ?)', [nome,  description])
 
     return NextResponse.json({
       message: 'Categoria cadastrada!',
@@ -44,19 +44,37 @@ async function updateCategoria(req) {
   let connection
   try {
     const data = await req.json()
-    const { id, nome } = data
+    const { id, nome, description } = data
     const categoriaId = Number(id)
 
     if (!categoriaId || isNaN(categoriaId)) {
       return NextResponse.json({ error: 'ID inválido.' }, { status: 400 })
     }
 
-    if (!nome) {
-      return NextResponse.json({ error: 'O campo "nome" é obrigatório para atualização.' }, { status: 400 })
+    if (!nome && !description) {
+      return NextResponse.json({ error: 'Nenhum dado enviado para atualizar.' }, { status: 400 })
     }
 
     connection = await getConnection()
-    await connection.query('UPDATE categoria SET nome=? WHERE id=?', [nome, categoriaId])
+
+    const campos = []
+    const valores = []
+
+    if (nome) {
+      campos.push('nome=?')
+      valores.push(nome)
+    }
+
+    if (description) {
+      campos.push('description=?')
+      valores.push(description)
+    }
+
+    valores.push(categoriaId)
+
+    const sql = `UPDATE categoria SET ${campos.join(', ')} WHERE id=?`
+
+    await connection.query(sql, valores)
 
     return NextResponse.json({ message: 'Categoria atualizada!' })
   } catch (error) {
@@ -66,6 +84,7 @@ async function updateCategoria(req) {
     if (connection) connection.release()
   }
 }
+
 
 async function deleteCategoria(req) {
   let connection

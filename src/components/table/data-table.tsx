@@ -38,11 +38,13 @@ export interface User {
 export interface Category {
   id: number;
   nome: string;
+  description: string;
 }
 
 interface Column<T> {
   key: string;
   label: string;
+  
   render: (item: T) => React.ReactNode;
 }
 
@@ -139,7 +141,12 @@ const tableConfigs = {
     {
       key: "nome",
       label: "Nome",
-      render: (item: User) => item.nome,
+      render: (item: Category) => item.nome,
+    },
+    {
+      key: "description",
+      label: "Descrição",
+      render: (item: Category) => item.description,
     }
   ] as Column<Category>[],
 };

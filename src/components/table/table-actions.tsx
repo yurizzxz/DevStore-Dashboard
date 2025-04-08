@@ -51,7 +51,7 @@ export function TableActions({ item, type }: TableActionsProps) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              Editar {type === "products" ? "Produto" : "Usuário"}
+              Editar {type === "products" ? "Produto" : type === "categories" ? "Categoria" :  "Usuário"}
             </DialogTitle>
             <DialogDescription>
               Faça as alterações necessárias e salve.
@@ -67,6 +67,14 @@ export function TableActions({ item, type }: TableActionsProps) {
                 className="h-11"
                 type="text"
                 defaultValue={(item as Category).nome}
+              />
+              <Label className="-mb-1.5">Descrição</Label>
+              <Input
+                type="text"
+                name="description"
+                onChange={handleCategoryChange}
+                className="h-11"
+                defaultValue={(item as Category).description}
               />
             </>
           )}

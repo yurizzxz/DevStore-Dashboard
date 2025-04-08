@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export interface Category {
   id: number;
   nome: string;
+  description: string;
 }
 
 export function useCategories() {
@@ -18,6 +19,7 @@ export function useCategories() {
         const categoryList: Category[] = data.map((item: any) => ({
           id: item.id,
           nome: item.nome,
+          description: item.description,
         }));
 
         setCategories(categoryList);

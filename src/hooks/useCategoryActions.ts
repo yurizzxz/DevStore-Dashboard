@@ -8,6 +8,7 @@ export function useCategoryActions() {
 
   const [formData, setFormData] = useState({
     nome: "",
+    description: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
