@@ -6,8 +6,11 @@ import {
   IconPackage,
   IconUsers,
   IconUserCog,
-  IconFolder,
-  IconSettings
+  IconSettings,
+  IconDiscount,
+  IconBrowser,
+  IconShoppingCart,
+  IconFolders
 } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/sidebar/nav-main"
@@ -43,6 +46,16 @@ const data = {
       icon: IconPackage, 
     },
     {
+      title: "Pedidos",
+      url: "/orders",
+      icon: IconShoppingCart,
+    },
+    {
+      title: "Conteúdo do Site",
+      url: "/content",
+      icon: IconBrowser, 
+    },
+    {
       title: "Usuários",
       url: "/users",
       icon: IconUsers, 
@@ -52,6 +65,17 @@ const data = {
       url: "/admins",
       icon: IconUserCog, 
     },
+    {
+      title: "Categorias",
+      url: "/categories",
+      icon: IconFolders, 
+    },
+    {
+      title: "Promoções",
+      url: "/promotions",
+      icon: IconDiscount, 
+    },
+
   ],
   navSecondary: [
     {
@@ -70,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <div className="p-1.5 -ml-1 mt-3">
               <Link href="/" className="inset" aria-label="Clique para ir à Página Inicial">
-                <Image src="/logo1.png" alt="Logo DevStore" width={150} height={32} />
+                <Image src="/logo1.png" alt="Logo DevStore" width={130} height={32} />
               </Link>
             </div>
           </SidebarMenuItem>

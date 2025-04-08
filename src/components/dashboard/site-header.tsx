@@ -11,11 +11,18 @@ const titles: Record<string, string> = {
   "/users": "Usuários",
   "/admins": "Administradores",
   "/settings": "Configurações",
+  "/content": "Conteúdo do site",
+  "/promotions": "Promocoes",
+  "/orders": "Pedidos",
+
+  //subpages
+  "/users/register": "Cadastrar Usuário",
+  "/products/register": "Cadastrar Produto",
 };
 
 export function SiteHeader() {
-  const pathname = usePathname(); 
-  const title = titles[pathname] || "Documents"; 
+  const pathname = usePathname();
+  const title = titles[pathname] || "Página Não Nomeada";
 
   return (
     <header className="flex h-[--header-height] shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">

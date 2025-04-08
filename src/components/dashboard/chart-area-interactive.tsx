@@ -30,7 +30,7 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 
-export const description = "An interactive area chart"
+export const description = "Área de gráficos interativos"
 
 const chartData = [
   { date: "2024-04-01", desktop: 222, mobile: 150 },
@@ -167,10 +167,10 @@ export function ChartAreaInteractive() {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Total Visitors</CardTitle>
+        <CardTitle>Total de Compras</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Total for the last 3 months
+            Total de compras nos ultimos 90 dias
           </span>
           <span className="@[540px]/card:hidden">Last 3 months</span>
         </CardDescription>
@@ -182,27 +182,27 @@ export function ChartAreaInteractive() {
             variant="outline"
             className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
           >
-            <ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
-            <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
-            <ToggleGroupItem value="7d">Last 7 days</ToggleGroupItem>
+            <ToggleGroupItem value="90d">Últimos 3 meses</ToggleGroupItem>
+            <ToggleGroupItem value="30d">Últimos 30 dias</ToggleGroupItem>
+            <ToggleGroupItem value="7d">Últimos 7 dias</ToggleGroupItem>
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
               className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
               size="sm"
-              aria-label="Select a value"
+              aria-label="Selecione um periodo"
             >
-              <SelectValue placeholder="Last 3 months" />
+              <SelectValue placeholder="Últimos 3 meses" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
               <SelectItem value="90d" className="rounded-lg">
-                Last 3 months
+              Últimos 3 meses
               </SelectItem>
               <SelectItem value="30d" className="rounded-lg">
-                Last 30 days
+              Últimos 30 dias
               </SelectItem>
               <SelectItem value="7d" className="rounded-lg">
-                Last 7 days
+              Últimos 7 dias
               </SelectItem>
             </SelectContent>
           </Select>
