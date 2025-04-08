@@ -12,14 +12,15 @@ import { Button } from "@/components/ui/buttonUi";
 import { Pencil, Trash2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Product, User } from "./data-table";
+import { Category, Product, User } from "./data-table";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useUserActions } from "@/hooks/useUserActions";
 import { useProductActions } from "@/hooks/useProductActions";
+import { useCategoryActions } from "@/hooks/useCategoryActions";
 
 interface TableActionsProps {
-  item: Product | User;
-  type: "products" | "users";
+  item: Product | User | Category;
+  type: "products" | "users" | "categories";
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
@@ -33,6 +34,11 @@ export function TableActions({ item, type }: TableActionsProps) {
     updateProduct,
     handleChange: handleProductChange,
   } = useProductActions();
+  const {
+    deleteCategory,
+    updateCategory,
+    handleChange: handleCategoryChange,
+  } = useCategoryActions();
 
   return (
     <div className="flex justify-end items-center gap-1">
@@ -51,6 +57,19 @@ export function TableActions({ item, type }: TableActionsProps) {
               Faça as alterações necessárias e salve.
             </DialogDescription>
           </DialogHeader>
+
+          {type === "categories" && (
+            <>
+              <Label className="-mb-1.5">Nome</Label>
+              <Input
+                name="nome"
+                onChange={handleCategoryChange}
+                className="h-11"
+                type="text"
+                defaultValue={(item as Category).nome}
+              />
+            </>
+          )}
 
           {type === "products" && (
             <>
@@ -152,7 +171,9 @@ export function TableActions({ item, type }: TableActionsProps) {
               onClick={(e) =>
                 type === "users"
                   ? updateUser(e, (item as User).id)
-                  : updateProduct(e, (item as Product).id)
+                  : type === "products"
+                  ? updateProduct(e, (item as Product).id)
+                  : updateCategory(e, (item as Category).id)
               }
               className="text-white"
             >
@@ -179,11 +200,13 @@ export function TableActions({ item, type }: TableActionsProps) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
-          <Button
+            <Button
               onClick={() =>
                 type === "users"
                   ? deleteUser((item as User).id)
-                  : deleteProduct((item as Product).id)
+                  : type === "products"
+                  ? deleteProduct((item as Product).id)
+                  : deleteCategory((item as Category).id)
               }
               className="text-white"
               variant={"destructive"}

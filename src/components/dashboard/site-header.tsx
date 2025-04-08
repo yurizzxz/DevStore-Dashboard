@@ -14,10 +14,12 @@ const titles: Record<string, string> = {
   "/content": "Conteúdo do site",
   "/promotions": "Promocoes",
   "/orders": "Pedidos",
+  "/categories": "Categorias",
 
   //subpages
   "/users/register": "Cadastrar Usuário",
   "/products/register": "Cadastrar Produto",
+  "/categories/register": "Cadastrar Categoria",
 };
 
 export function SiteHeader() {

@@ -29,18 +29,21 @@ export interface User {
   id: number;
   nome: string;
   email: string;
-
   telefone: string;
   cpf: string;
   cidade: string;
   cargo: string;
 }
 
-interface DataTableProps {
-  data: Product[] | User[];
-  type: "products" | "users";
-  withPagination?: boolean;
-  itemsPerPage?: number;
+export interface Category {
+  id: number;
+  nome: string;
+}
+
+interface Column<T> {
+  key: string;
+  label: string;
+  render: (item: T) => React.ReactNode;
 }
 
 const getCategoryName = (categoryId?: number) => {
@@ -53,21 +56,114 @@ const getCategoryName = (categoryId?: number) => {
     6: "Promoções do Dia",
     7: "Promoção 1",
   };
-
   return categories[categoryId || 0] || "Null";
 };
 
-export function DataTable({
+const tableConfigs = {
+  products: [
+    {
+      key: "image",
+      label: "Img",
+      render: (item: Product) => (
+        <Image src={item.image} alt={item.nome} width={35} height={35} />
+      ),
+    },
+    {
+      key: "nome",
+      label: "Nome",
+      render: (item: Product) =>
+        item.nome.length > 10 ? item.nome.slice(0, 15) + "..." : item.nome,
+    },
+    {
+      key: "specifications",
+      label: "Especificações",
+      render: (item: Product) =>
+        item.specifications.length > 10
+          ? item.specifications.slice(0, 10) + "..."
+          : item.specifications,
+    },
+    {
+      key: "category",
+      label: "Categoria",
+      render: (item: Product) => getCategoryName(item.category),
+    },
+    {
+      key: "category2",
+      label: "Promoção",
+      render: (item: Product) => getCategoryName(item.category2),
+    },
+    {
+      key: "estoque",
+      label: "Estoque",
+      render: (item: Product) => item.estoque,
+    },
+    {
+      key: "price",
+      label: "Preço",
+      render: (item: Product) => formatCurrency(item.price),
+    },
+  ] as Column<Product>[],
+  users: [
+    {
+      key: "nome",
+      label: "Nome",
+      render: (item: User) => item.nome,
+    },
+    {
+      key: "email",
+      label: "Email",
+      render: (item: User) => item.email,
+    },
+    {
+      key: "telefone",
+      label: "Telefone",
+      render: (item: User) => item.telefone,
+    },
+    {
+      key: "cpf",
+      label: "CPF",
+      render: (item: User) => item.cpf,
+    },
+    {
+      key: "cidade",
+      label: "Cidade",
+      render: (item: User) => item.cidade,
+    },
+    {
+      key: "cargo",
+      label: "Cargo",
+      render: (item: User) => item.cargo,
+    },
+  ] as Column<User>[],
+  categories: [
+    {
+      key: "nome",
+      label: "Nome",
+      render: (item: User) => item.nome,
+    }
+  ] as Column<Category>[],
+};
+
+interface DataTableProps<T> {
+  data: T[];
+  type: "products" | "users" | "categories";
+  withPagination?: boolean;
+  itemsPerPage?: number;
+}
+
+export function DataTable<T extends Product | User | Category>({
   data,
   type,
   withPagination = true,
   itemsPerPage = 5,
-}: DataTableProps) {
+}: DataTableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
+  const totalPages = Math.ceil((data.length || 0) / itemsPerPage);
   const displayedData = withPagination
     ? data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     : data;
+
+  const columns = tableConfigs[type] as Column<T>[];
 
   return (
     <div>
@@ -75,18 +171,9 @@ export function DataTable({
         <TableHeader>
           <TableRow>
             <TableHead className="w-10">ID</TableHead>
-            {type === "products" && <TableHead className="w-15">Img</TableHead>}
-            <TableHead className="w-50">Nome</TableHead>
-            {type === "products" && <TableHead  className="w-35">Especificações</TableHead>}
-            {type === "products" && <TableHead className="w-33">Categoria</TableHead>}
-            {type === "products" && <TableHead className="w-42">Promoção</TableHead>}
-            {type === "products" && <TableHead className="w-30">Estoque</TableHead>}
-            {type === "products" && <TableHead>Preço</TableHead>}
-            {type === "users" && <TableHead>Email</TableHead>}
-            {type === "users" && <TableHead>Telefone</TableHead>}
-            {type === "users" && <TableHead>CPF</TableHead>}
-            {type === "users" && <TableHead>Cidade</TableHead>}
-            {type === "users" && <TableHead>Cargo</TableHead>}
+            {columns.map((col) => (
+              <TableHead key={col.key}>{col.label}</TableHead>
+            ))}
             <TableHead className="text-right">Ações</TableHead>
           </TableRow>
         </TableHeader>
@@ -95,75 +182,16 @@ export function DataTable({
             displayedData.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">{item.id}</TableCell>
-
-                {type === "products" && (
-                  <TableCell>
-                    <Image
-                      src={(item as Product).image}
-                      alt={item.nome}
-                      width={35}
-                      height={35}
-                    />
-                  </TableCell>
-                )}
-
-                <TableCell>
-                  {item.nome.length > 10
-                    ? item.nome.slice(0, 15) + "..."
-                    : item.nome}
-                </TableCell>
-
-                {type === "products" && (
-                  <>
-                    <TableCell>
-                      {(item as Product).specifications.length > 10
-                        ? (item as Product).specifications.slice(0, 10) + "..."
-                        : (item as Product).specifications}
-                    </TableCell>
-
-                    <TableCell>
-                      {(item as Product).category === 1 && "Processador"}
-                      {(item as Product).category === 2 && "Placa de Vídeo"}
-                      {(item as Product).category === 3 && "Memória RAM"}
-                      {(item as Product).category === 4 && "Notebook"}
-                    </TableCell>
-                    <TableCell>
-                      {(item as Product).category2 === 5
-                        ? "Mais Vendidos"
-                        : (item as Product).category2 === 6
-                        ? "Promoções do Dia"
-                        : (item as Product).category2 === 7
-                        ? "Promoção 1"
-                        : (item as Product).category2 || "Null"}
-                    </TableCell>
-                    <TableCell>{(item as Product).estoque}</TableCell>
-                    <TableCell>
-                      {formatCurrency((item as Product).price)}
-                    </TableCell>
-                  </>
-                )}
-
-                {type === "users" && (
-                  <TableCell>{(item as User).email}</TableCell>
-                )}
-                {type === "users" && (
-                  <TableCell>{(item as User).telefone}</TableCell>
-                )}
-                {type === "users" && (
-                  <TableCell>{(item as User).cpf}</TableCell>
-                )}
-                {type === "users" && (
-                  <TableCell>{(item as User).cidade}</TableCell>
-                )}
-                {type === "users" && (
-                  <TableCell>{(item as User).cargo}</TableCell>
-                )}
-
+                {columns.map((col) => (
+                  <TableCell key={col.key}>{col.render(item)}</TableCell>
+                ))}
                 <TableCell className="text-right">
                   <TableActions
                     item={{
                       ...item,
-                      categoryName: getCategoryName((item as Product).category),
+                      categoryName: getCategoryName(
+                        (item as Product).category
+                      ),
                       category2Name: getCategoryName(
                         (item as Product).category2
                       ),
@@ -174,9 +202,9 @@ export function DataTable({
               </TableRow>
             ))
           ) : (
-            <TableRow className="mt-5">
-              <TableCell colSpan={type === "products" ? 7 : 6}>
-                Nenhum {type === "products" ? "produto" : "usuário"} encontrado.
+            <TableRow>
+              <TableCell colSpan={columns.length + 2}>
+                Nenhum dado encontrado.
               </TableCell>
             </TableRow>
           )}
