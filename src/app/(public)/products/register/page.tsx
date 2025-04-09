@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/buttonUi";
-import HeadingTitle from "@/components/ui/heading";
+import {HeadingTitle} from "@/components/ui/heading";
 import Link from "next/link";
 
 import { SidebarInset } from "@/components/ui/sidebar";
