@@ -77,7 +77,6 @@ async function updateCategoria(req) {
     valores.push(categoriaId)
 
     const sql = `UPDATE categoria SET ${campos.join(', ')} WHERE id=?`
-
     await connection.query(sql, valores)
 
     return NextResponse.json({ message: 'Categoria atualizada!' })

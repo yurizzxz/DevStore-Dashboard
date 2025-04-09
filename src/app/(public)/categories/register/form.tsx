@@ -20,7 +20,6 @@ export function RegisterForm() {
             name="nome"
             onChange={handleChange}
           />
-
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="description">Descrição</Label>
@@ -32,7 +31,17 @@ export function RegisterForm() {
             name="description"
             onChange={handleChange}
           />
-
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="promotion">Promoção</Label>
+          <Input
+            className="h-11"
+            placeholder="1 Sim, 0 Não"
+            type="text"
+            id="promotion"
+            name="promotion"
+            onChange={handleChange}
+          />
         </div>
       </div>
 

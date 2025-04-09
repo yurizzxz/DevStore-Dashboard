@@ -1,15 +1,29 @@
 "use client";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarInset } from "@/components/ui/sidebar";
-
 import HeadingTitle from "@/components/ui/heading";
 import { DataTable } from "@/components/table/data-table";
 import { useUsers } from "@/hooks/useUsers";
 import { Button } from "@/components/ui/buttonUi";
 import Link from "next/link";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { useState } from "react";
 
 export default function Products() {
   const users = useUsers();
+
+  const [cargoFilter, setCargoFilter] = useState("all");
+
+  const filteredUsers = users.filter((user) => {
+    if (cargoFilter === "all") return true;
+    return String(user.cargo).toLowerCase() === cargoFilter;
+  });
   return (
     <SidebarInset>
       <SiteHeader />
@@ -18,12 +32,26 @@ export default function Products() {
           <div className="flex px-4 lg:px-6 flex-col gap-4 py-4 md:gap-6 md:py-6">
             <div className="flex items-center justify-between">
               <HeadingTitle>Usuários</HeadingTitle>
-              <Link href="/users/register">
-                <Button>Adicionar Usuário</Button>
-              </Link>
+              <div className="flex items-center gap-4">
+                <div className="w-full max-w-xs">
+                  <Select value={cargoFilter} onValueChange={setCargoFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Filtrar por cargo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos</SelectItem>
+                      <SelectItem value="admin">Admins</SelectItem>
+                      <SelectItem value="default">Default</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Link href="/users/register">
+                  <Button>Adicionar Usuário</Button>
+                </Link>
+              </div>
             </div>
             <DataTable
-              data={users}
+              data={filteredUsers}
               type="users"
               withPagination
               itemsPerPage={20}

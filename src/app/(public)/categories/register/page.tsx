@@ -15,7 +15,7 @@ export default function Page() {
           <div className="flex px-4 lg:px-6 flex-col gap-4 py-4 md:gap-6 md:py-6">
             <div className="flex items-center justify-between">
               <HeadingTitle>Cadastrar Produto</HeadingTitle>
-              <Link href="/products">
+              <Link href="/categories">
                 <Button>Ver Lista</Button>
               </Link>
             </div>

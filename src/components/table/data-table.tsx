@@ -152,7 +152,7 @@ const tableConfigs = {
     {
       key: "promotion",
       label: "Promoção",
-      render: (item: Category) => item.promotion,
+      render: (item: Category) => item.promotion ? "Sim" : "Não",
     }
   ] as Column<Category>[],
 };
@@ -185,7 +185,7 @@ export function DataTable<T extends Product | User | Category>({
           <TableRow>
             <TableHead className="w-10">ID</TableHead>
             {columns.map((col) => (
-              <TableHead key={col.key}>{col.label}</TableHead>
+              <TableHead key={col.key} className={col.key === "nome" ? "w-45" : ""}>{col.label}</TableHead>
             ))}
             <TableHead className="text-right">Ações</TableHead>
           </TableRow>
