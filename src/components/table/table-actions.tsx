@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/buttonUi";
 import { Pencil, Trash2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Category, Product, User } from "./data-table";
+import { Product, Category, User } from "@/lib/types";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useUserActions } from "@/hooks/useUserActions";
 import { useProductActions } from "@/hooks/useProductActions";
@@ -51,7 +51,12 @@ export function TableActions({ item, type }: TableActionsProps) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              Editar {type === "products" ? "Produto" : type === "categories" ? "Categoria" :  "Usuário"}
+              Editar{" "}
+              {type === "products"
+                ? "Produto"
+                : type === "categories"
+                ? "Categoria"
+                : "Usuário"}
             </DialogTitle>
             <DialogDescription>
               Faça as alterações necessárias e salve.

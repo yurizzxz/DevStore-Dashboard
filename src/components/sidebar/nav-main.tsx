@@ -11,15 +11,18 @@ import {
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function NavMain({
   items,
+  pathname,
 }: {
   items: {
     title: string;
     url: string;
     icon?: Icon;
   }[];
+  pathname: string;
 }) {
   return (
     <SidebarGroup>
@@ -29,7 +32,7 @@ export function NavMain({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <Link href={item.url}>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton className={pathname === item.url ? "bg-primary" : ""} tooltip={item.title}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                 </SidebarMenuButton>
