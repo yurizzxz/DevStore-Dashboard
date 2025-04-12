@@ -11,13 +11,12 @@ import Image from "next/image";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { TableActions } from "./table-actions";
 import { Pagination } from "./pagination";
-import { Product, Category, User,  } from "@/lib/types";
-
+import { Product, Category, User, Order } from "@/lib/types";
 
 interface Column<T> {
   key: string;
   label: string;
-  
+
   render: (item: T) => React.ReactNode;
 }
 
@@ -124,19 +123,50 @@ const tableConfigs = {
     {
       key: "promotion",
       label: "Promoção",
-      render: (item: Category) => item.promotion ? "Sim" : "Não",
-    }
+      render: (item: Category) => (item.promotion ? "Sim" : "Não"),
+    },
   ] as Column<Category>[],
+  orders: [
+    {
+      key: "user_id",
+      label: "User ID",
+      render: (item: Order) => item.user_id,
+    },
+    {
+      key: "total",
+      label: "Total",
+      render: (item: Order) => item.total.toFixed(2),
+    },
+    {
+      key: "status",
+      label: "Status",
+      render: (item: Order) => item.status,
+    },
+    {
+      key: "products",
+      label: "Produtos",
+      render: (item: Order) => {
+        return Array.isArray(item.products)
+          ? item.products.map((product: any) => ({
+              produto_id: product.produto_id,
+              quantidade: product.quantidade,
+              preco: product.preco,
+            }))
+          : [];
+      },
+    }
+    
+  ],
 };
 
 interface DataTableProps<T> {
   data: T[];
-  type: "products" | "users" | "categories";
+  type: "products" | "users" | "categories" | "orders";
   withPagination?: boolean;
   itemsPerPage?: number;
 }
 
-export function DataTable<T extends Product | User | Category>({
+export function DataTable<T extends Product | User | Category | Order>({
   data,
   type,
   withPagination = true,
@@ -157,7 +187,12 @@ export function DataTable<T extends Product | User | Category>({
           <TableRow>
             <TableHead className="w-10">ID</TableHead>
             {columns.map((col) => (
-              <TableHead key={col.key} className={col.key === "nome" ? "w-45" : ""}>{col.label}</TableHead>
+              <TableHead
+                key={col.key}
+                className={col.key === "nome" ? "w-45" : ""}
+              >
+                {col.label}
+              </TableHead>
             ))}
             <TableHead className="text-right">Ações</TableHead>
           </TableRow>
@@ -174,9 +209,7 @@ export function DataTable<T extends Product | User | Category>({
                   <TableActions
                     item={{
                       ...item,
-                      categoryName: getCategoryName(
-                        (item as Product).category
-                      ),
+                      categoryName: getCategoryName((item as Product).category),
                       category2Name: getCategoryName(
                         (item as Product).category2
                       ),

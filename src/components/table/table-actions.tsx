@@ -12,15 +12,16 @@ import { Button } from "@/components/ui/buttonUi";
 import { Pencil, Trash2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Product, Category, User } from "@/lib/types";
+import { Product, Category, User, Order } from "@/lib/types";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useUserActions } from "@/hooks/useUserActions";
 import { useProductActions } from "@/hooks/useProductActions";
 import { useCategoryActions } from "@/hooks/useCategoryActions";
+import { useOrderActions } from "@/hooks/useOrdersActions";
 
 interface TableActionsProps {
-  item: Product | User | Category;
-  type: "products" | "users" | "categories";
+  item: Product | User | Category | Order;
+  type: "products" | "users" | "categories" | "orders";
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
@@ -39,6 +40,7 @@ export function TableActions({ item, type }: TableActionsProps) {
     updateCategory,
     handleChange: handleCategoryChange,
   } = useCategoryActions();
+  const { deleteOrder, updateOrder, handleChange: handleOrderChange } = useOrderActions();
 
   return (
     <div className="flex justify-end items-center gap-1">
@@ -56,7 +58,9 @@ export function TableActions({ item, type }: TableActionsProps) {
                 ? "Produto"
                 : type === "categories"
                 ? "Categoria"
-                : "Usuário"}
+                : type === "users"
+                ? "Usuário"
+                : "Pedido"}
             </DialogTitle>
             <DialogDescription>
               Faça as alterações necessárias e salve.
@@ -187,6 +191,29 @@ export function TableActions({ item, type }: TableActionsProps) {
               />
             </>
           )}
+
+          {type === "orders" && (
+            <>
+            
+              <Label className="-mb-1.5">Status</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="status"
+                onChange={handleOrderChange}
+                defaultValue={(item as Order).status}
+              />
+              <Label className="-mb-1.5">Total</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="total"
+                onChange={handleOrderChange}
+                defaultValue={formatCurrency((item as Order).total)}
+              />
+            </>
+          )}
+
           <DialogFooter>
             <Button
               onClick={(e) =>
@@ -194,7 +221,9 @@ export function TableActions({ item, type }: TableActionsProps) {
                   ? updateUser(e, (item as User).id)
                   : type === "products"
                   ? updateProduct(e, (item as Product).id)
-                  : updateCategory(e, (item as Category).id)
+                  : type === "categories"
+                  ? updateCategory(e, (item as Category).id)
+                  : updateOrder(e, (item as Order).id)
               }
               className="text-white"
             >
@@ -227,7 +256,9 @@ export function TableActions({ item, type }: TableActionsProps) {
                   ? deleteUser((item as User).id)
                   : type === "products"
                   ? deleteProduct((item as Product).id)
-                  : deleteCategory((item as Category).id)
+                  : type === "categories"
+                  ? deleteCategory((item as Category).id)
+                  : deleteOrder((item as Order).id)
               }
               className="text-white"
               variant={"destructive"}

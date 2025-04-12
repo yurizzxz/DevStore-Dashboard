@@ -15,7 +15,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-export default function Products() {
+export default function Page() {
   const categories = useCategories();
 
   const [promotionFilter, setPromotionFilter] = useState("all");

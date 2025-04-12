@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 
-export default function Products() {
+export default function Page() {
   const users = useUsers();
 
   const [cargoFilter, setCargoFilter] = useState("all");
