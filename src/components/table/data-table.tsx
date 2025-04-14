@@ -33,6 +33,16 @@ const getCategoryName = (categoryId?: number) => {
   return categories[categoryId || 0] || "Null";
 };
 
+const getStatsName = (statsId?: number) => {
+  const stats: { [key: number]: string } = {
+    0: "Pendente",
+    1: "Ativo",
+    2: "Cancelado",
+    3: "Finalizado",
+  };
+  return stats[statsId || 0] || "Null";
+}
+
 const tableConfigs = {
   products: [
     {
@@ -140,22 +150,8 @@ const tableConfigs = {
     {
       key: "status",
       label: "Status",
-      render: (item: Order) => item.status,
+      render: (item: Order) => getStatsName(item.status),
     },
-    {
-      key: "products",
-      label: "Produtos",
-      render: (item: Order) => {
-        return Array.isArray(item.products)
-          ? item.products.map((product: any) => ({
-              produto_id: product.produto_id,
-              quantidade: product.quantidade,
-              preco: product.preco,
-            }))
-          : [];
-      },
-    }
-    
   ],
 };
 

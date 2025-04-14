@@ -32,6 +32,5 @@ export interface Order {
   id: number;
   user_id: number;
   total: number;
-  status: string;
-  products: { produto_id: number; quantidade: number; preco: number }[]; 
+  status: number;
 }

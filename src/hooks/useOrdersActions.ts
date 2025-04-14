@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation";
 export function useOrderActions() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    user_id: 0,
-    total: 0,
-    status: "pendente",
-    products: [{ produto_id: 0, quantidade: 1, preco: 0 }],
+    user_id: "",
+    total: "",
+    status: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

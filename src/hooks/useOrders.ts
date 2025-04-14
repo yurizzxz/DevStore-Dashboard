@@ -5,7 +5,6 @@ export interface Order {
   user_id: number;
   total: number;
   status: string;
-  products: { produto_id: number; quantidade: number; preco: number }[];
 }
 
 export function useOrders() {
@@ -24,13 +23,6 @@ export function useOrders() {
           user_id: order.user_id,
           total: order.total,
           status: order.status,
-          products: Array.isArray(order.products)
-            ? order.products.map((product: any) => ({
-                produto_id: product.produto_id,
-                quantidade: product.quantidade,
-                preco: product.preco,
-              }))
-            : [], 
         }));
         
         console.log(orderList),
