@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
+import { Order } from "@/lib/types";
 
-export interface Order {
-  id: number;
-  user_id: number;
-  total: number;
-  status: string;
-}
+
 
 export function useOrders() {
   const [orders, setOrders] = useState<Order[]>([]);

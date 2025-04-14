@@ -11,7 +11,7 @@ import Image from "next/image";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { TableActions } from "./table-actions";
 import { Pagination } from "./pagination";
-import { Product, Category, User, Order } from "@/lib/types";
+import { Product, Category, User, Order, Section } from "@/lib/types";
 
 interface Column<T> {
   key: string;
@@ -152,29 +152,58 @@ const tableConfigs = {
       label: "Status",
       render: (item: Order) => getStatsName(item.status),
     },
-  ],
+  ] as Column<Order>[],
+  sections: [
+    {
+      key: "name",
+      label: "Nome",
+      render: (item: Section) => item.tipo,
+    },
+    {
+      key: "category",
+      label: "Categoria",
+      render: (item: Section) => getCategoryName(item.categoriaId),
+    },
+    {
+      key: "order",
+      label: "Ordem",
+      render: (item: Section) => item.ordem,
+    },
+    {
+      key: "active",
+      label: "Ativo",
+      render: (item: Section) => (item.ativo ? "Sim" : "Não"),
+    },
+  ] as Column<Section>[],
 };
-
-interface DataTableProps<T> {
-  data: T[];
-  type: "products" | "users" | "categories" | "orders";
+type DataMap = {
+  products: Product;
+  users: User;
+  categories: Category;
+  orders: Order;
+  sections: Section;
+};
+interface DataTableProps<K extends keyof DataMap> {
+  data: DataMap[K][];
+  type: K;
   withPagination?: boolean;
   itemsPerPage?: number;
 }
 
-export function DataTable<T extends Product | User | Category | Order>({
+export function DataTable<K extends keyof DataMap>({
   data,
   type,
   withPagination = true,
   itemsPerPage = 5,
-}: DataTableProps<T>) {
+}: DataTableProps<K>) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil((data.length || 0) / itemsPerPage);
   const displayedData = withPagination
     ? data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     : data;
 
-  const columns = tableConfigs[type] as Column<T>[];
+  const columns = tableConfigs[type] as Column<DataMap[K]>[];
+
 
   return (
     <div>
@@ -202,16 +231,15 @@ export function DataTable<T extends Product | User | Category | Order>({
                   <TableCell key={col.key}>{col.render(item)}</TableCell>
                 ))}
                 <TableCell className="text-right">
-                  <TableActions
-                    item={{
-                      ...item,
-                      categoryName: getCategoryName((item as Product).category),
-                      category2Name: getCategoryName(
-                        (item as Product).category2
-                      ),
-                    }}
-                    type={type}
-                  />
+                 <TableActions
+  item={{
+    ...(item as Product),
+    categoryName: getCategoryName((item as Product).category),
+    category2Name: getCategoryName((item as Product).category2),
+  } as Product}
+  type={type}
+/>
+
                 </TableCell>
               </TableRow>
             ))

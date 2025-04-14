@@ -34,3 +34,12 @@ export interface Order {
   total: number;
   status: number;
 }
+
+export interface Section {
+  id: number;
+  titulo: string;
+  tipo: string;
+  categoriaId: number;
+  ordem: number;
+  ativo: number;
+}

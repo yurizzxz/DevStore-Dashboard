@@ -21,7 +21,7 @@ import { useOrderActions } from "@/hooks/useOrdersActions";
 
 interface TableActionsProps {
   item: Product | User | Category | Order;
-  type: "products" | "users" | "categories" | "orders";
+  type: "products" | "users" | "categories" | "orders" | "sections";
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
