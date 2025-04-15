@@ -8,7 +8,8 @@ import {
   IconSettings,
   IconBrowser,
   IconShoppingCart,
-  IconFolders
+  IconFolders,
+  IconTruckDelivery
 } from "@tabler/icons-react"
 
 import { NavMain } from "@/components/sidebar/nav-main"
@@ -26,54 +27,7 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/",
-      icon: IconLayoutDashboard,  
-    },
-    {
-      title: "Produtos",
-      url: "/products",
-      icon: IconPackage, 
-    },
-    {
-      title: "Pedidos",
-      url: "/orders",
-      icon: IconShoppingCart,
-    },
-    {
-      title: "Conteúdo do Site",
-      url: "/content",
-      icon: IconBrowser, 
-    },
-    {
-      title: "Usuários",
-      url: "/users",
-      icon: IconUsers, 
-    },
-    {
-      title: "Categorias",
-      url: "/categories",
-      icon: IconFolders, 
-    },
-
-  ],
-  navSecondary: [
-    {
-      title: "Configurações",
-      url: "#",
-      icon: IconSettings, 
-    },
-  ],
-}
+import {  navMain, navSecondary, navUser } from "@/data/links"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
@@ -92,12 +46,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarSeparator className="-ml-[0.5px] mt-2 mb-3.5" />
       <SidebarContent>
-        <NavMain items={data.navMain} pathname={pathname} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={navMain} pathname={pathname} />
+        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarSeparator className="-ml-[0.5px]" />
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={navUser} />
       </SidebarFooter>
     </Sidebar>
   )
