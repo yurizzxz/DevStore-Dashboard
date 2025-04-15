@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/buttonUi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useProductActions } from "@/hooks/useProductActions";
+import { useProductActions } from "@/hooks/products/useProductActions";
 
 export function RegisterForm() {
   const { createProduct, handleChange } = useProductActions();

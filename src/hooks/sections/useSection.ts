@@ -13,8 +13,8 @@ export function useSections() {
 
         const userList = data.map((user: any) => ({
           id: user.id,
-          titulo: user.title,
-          tipo: user.type,
+          nome: user.nome,
+          tipo: user.tipo,
           categoriaId: user.categoriaId,
           ordem: user.ordem,
           ativo: user.active

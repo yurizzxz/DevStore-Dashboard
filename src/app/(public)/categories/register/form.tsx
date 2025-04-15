@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/buttonUi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCategoryActions } from "@/hooks/useCategoryActions";
+import { useCategoryActions } from "@/hooks/categories/useCategoryActions";
 
 export function RegisterForm() {
   const { createCategory, handleChange } = useCategoryActions();

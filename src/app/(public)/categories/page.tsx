@@ -6,7 +6,7 @@ import {HeadingTitle} from "@/components/ui/heading";
 import { DataTable } from "@/components/table/data-table";
 import { Button } from "@/components/ui/buttonUi";
 import Link from "next/link";
-import { useCategories } from "@/hooks/useCategories";
+import { useCategories } from "@/hooks/categories/useCategories";
 import {
   Select,
   SelectTrigger,

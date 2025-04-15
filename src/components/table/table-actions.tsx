@@ -12,15 +12,16 @@ import { Button } from "@/components/ui/buttonUi";
 import { Pencil, Trash2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Product, Category, User, Order } from "@/lib/types";
+import { Product, Category, User, Order, Section } from "@/lib/types";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { useUserActions } from "@/hooks/useUserActions";
-import { useProductActions } from "@/hooks/useProductActions";
-import { useCategoryActions } from "@/hooks/useCategoryActions";
-import { useOrderActions } from "@/hooks/useOrdersActions";
+import { useUserActions } from "@/hooks/users/useUserActions";
+import { useProductActions } from "@/hooks/products/useProductActions";
+import { useCategoryActions } from "@/hooks/categories/useCategoryActions";
+import { useOrderActions } from "@/hooks/orders/useOrdersActions";
+import { useSectionActions } from "@/hooks/sections/useSectionActions";
 
 interface TableActionsProps {
-  item: Product | User | Category | Order;
+  item: Product | User | Category | Order | Section;
   type: "products" | "users" | "categories" | "orders" | "sections";
 }
 
@@ -40,7 +41,17 @@ export function TableActions({ item, type }: TableActionsProps) {
     updateCategory,
     handleChange: handleCategoryChange,
   } = useCategoryActions();
-  const { deleteOrder, updateOrder, handleChange: handleOrderChange } = useOrderActions();
+  const {
+    deleteOrder,
+    updateOrder,
+    handleChange: handleOrderChange,
+  } = useOrderActions();
+
+  const {
+    deleteSection,
+    updateSection,
+    handleChange: handleSectionChange,
+  } = useSectionActions();
 
   return (
     <div className="flex justify-end items-center gap-1">
@@ -60,7 +71,11 @@ export function TableActions({ item, type }: TableActionsProps) {
                 ? "Categoria"
                 : type === "users"
                 ? "Usuário"
-                : "Pedido"}
+                : type === "orders"
+                ? "Pedido"
+                : type === "sections"
+                ? "Seção"
+                : "Erro"}{" "}
             </DialogTitle>
             <DialogDescription>
               Faça as alterações necessárias e salve.
@@ -194,7 +209,6 @@ export function TableActions({ item, type }: TableActionsProps) {
 
           {type === "orders" && (
             <>
-            
               <Label className="-mb-1.5">Status</Label>
               <Input
                 className="h-11"
@@ -214,6 +228,55 @@ export function TableActions({ item, type }: TableActionsProps) {
             </>
           )}
 
+          {type === "sections" && (
+            <>
+              <Label className="-mb-1.5">Nome</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="nome"
+                onChange={handleSectionChange}
+                defaultValue={(item as Section).nome}
+              />
+
+              <Label className="-mb-1.5">Tipo</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="tipo"
+                onChange={handleSectionChange}
+                defaultValue={(item as Section).tipo}
+              />
+
+              <Label className="-mb-1.5">Categoria</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="categoriaId"
+                onChange={handleSectionChange}
+                defaultValue={(item as Section).categoriaId}
+              />
+
+              <Label className="-mb-1.5">Ordem</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="ordem"
+                onChange={handleSectionChange}
+                defaultValue={(item as Section).ordem}
+              />
+
+              <Label className="-mb-1.5">Ativo</Label>
+              <Input
+                className="h-11"
+                type="text"
+                name="ativo"
+                onChange={handleSectionChange}
+                defaultValue={(item as Section).ativo}
+              />
+            </>
+          )}
+
           <DialogFooter>
             <Button
               onClick={(e) =>
@@ -223,7 +286,9 @@ export function TableActions({ item, type }: TableActionsProps) {
                   ? updateProduct(e, (item as Product).id)
                   : type === "categories"
                   ? updateCategory(e, (item as Category).id)
-                  : updateOrder(e, (item as Order).id)
+                  : type === "orders"
+                  ? updateOrder(e, (item as Order).id)
+                  : updateSection(e, (item as Section).id)
               }
               className="text-white"
             >
@@ -258,7 +323,9 @@ export function TableActions({ item, type }: TableActionsProps) {
                   ? deleteProduct((item as Product).id)
                   : type === "categories"
                   ? deleteCategory((item as Category).id)
-                  : deleteOrder((item as Order).id)
+                  : type === "orders"
+                  ? deleteOrder((item as Order).id)
+                  : deleteSection((item as Section).id)
               }
               className="text-white"
               variant={"destructive"}

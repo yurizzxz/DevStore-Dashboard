@@ -4,7 +4,7 @@ import { SectionCards } from "@/components/dashboard/section-cards";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarInset } from "@/components/ui/sidebar";
 import {HeadingTitle} from "@/components/ui/heading";
-import { useProducts } from "@/hooks/useProducts";
+import { useProducts } from "@/hooks/products/useProducts";
 import { DataTable } from "@/components/table/data-table";
 
 interface Props {

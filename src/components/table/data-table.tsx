@@ -155,8 +155,13 @@ const tableConfigs = {
   ] as Column<Order>[],
   sections: [
     {
-      key: "name",
+      key: "nome",
       label: "Nome",
+      render: (item: Section) => item.nome,
+    },
+    {
+      key: "tipo",
+      label: "Tipo",
       render: (item: Section) => item.tipo,
     },
     {
@@ -172,7 +177,7 @@ const tableConfigs = {
     {
       key: "active",
       label: "Ativo",
-      render: (item: Section) => (item.ativo ? "Sim" : "Não"),
+      render: (item: Section) => (item.ativo ? "Não" : "Sim"),
     },
   ] as Column<Section>[],
 };

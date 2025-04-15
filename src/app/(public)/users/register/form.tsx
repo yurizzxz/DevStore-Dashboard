@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/buttonUi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUserActions } from "@/hooks/useUserActions"; 
+import { useUserActions } from "@/hooks/users/useUserActions"; 
 
 export function RegisterForm() {
   const { createUser, handleChange } = useUserActions();

@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarInset } from "@/components/ui/sidebar";
 import {HeadingTitle} from "@/components/ui/heading";
 import { DataTable } from "@/components/table/data-table";
-import { useOrders } from "@/hooks/useOrders";
+import { useOrders } from "@/hooks/orders/useOrders";
 
 export default function Page() {
   const orders = useOrders();

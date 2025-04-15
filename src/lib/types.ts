@@ -37,7 +37,7 @@ export interface Order {
 
 export interface Section {
   id: number;
-  titulo: string;
+  nome: string;
   tipo: string;
   categoriaId: number;
   ordem: number;

@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/dashboard/site-header";
 import { SidebarInset } from "@/components/ui/sidebar";
 import {HeadingTitle} from "@/components/ui/heading";
 import { DataTable } from "@/components/table/data-table";
-import { useUsers } from "@/hooks/useUsers";
+import { useUsers } from "@/hooks/users/useUsers";
 import { Button } from "@/components/ui/buttonUi";
 import Link from "next/link";
 import {
