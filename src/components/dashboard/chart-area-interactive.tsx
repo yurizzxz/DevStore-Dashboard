@@ -167,10 +167,10 @@ export function ChartAreaInteractive() {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Total de Compras</CardTitle>
+        <CardTitle>Total de Pedidos</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Total de compras nos ultimos 90 dias
+            Total de pedidos nos ultimos 90 dias
           </span>
           <span className="@[540px]/card:hidden">Last 3 months</span>
         </CardDescription>
