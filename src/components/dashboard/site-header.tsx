@@ -12,8 +12,11 @@ const titles: Record<string, string> = {
   "/content": "Conteúdo do site",
   "/orders": "Pedidos",
   "/categories": "Categorias",
+  "/cart": "Carrinhos",
 
   //subpages
+  "/orders/register": "Cadastrar Pedido",
+  "/content/register": "Cadastrar Seção",
   "/users/register": "Cadastrar Usuário",
   "/products/register": "Cadastrar Produto",
   "/categories/register": "Cadastrar Categoria",

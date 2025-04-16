@@ -134,7 +134,7 @@ export function TableActions({ item, type }: TableActionsProps) {
                 name="price"
                 onChange={handleProductChange}
                 className="h-11"
-                defaultValue={formatCurrency((item as Product).price)}
+                defaultValue={((item as Product).price)}
               />
               <Label className="-mb-1.5">Categoria</Label>
               <Input
@@ -223,7 +223,7 @@ export function TableActions({ item, type }: TableActionsProps) {
                 type="text"
                 name="total"
                 onChange={handleOrderChange}
-                defaultValue={formatCurrency((item as Order).total)}
+                defaultValue={(item as Order).total}
               />
             </>
           )}

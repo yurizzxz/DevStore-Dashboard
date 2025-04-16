@@ -63,7 +63,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Pedidos Finalizados</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
+            190
           </CardTitle>
           <CardAction>
             <Badge variant="outline">

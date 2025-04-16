@@ -12,35 +12,13 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { TableActions } from "./table-actions";
 import { Pagination } from "./pagination";
 import { Product, Category, User, Order, Section } from "@/lib/types";
+import { getCategoryName, getStatsName } from "@/utils/mappers";
 
 interface Column<T> {
   key: string;
   label: string;
 
   render: (item: T) => React.ReactNode;
-}
-
-const getCategoryName = (categoryId?: number) => {
-  const categories: { [key: number]: string } = {
-    1: "Processador",
-    2: "Placa de Vídeo",
-    3: "Memória RAM",
-    4: "Notebook",
-    5: "Mais Vendidos",
-    6: "Promoções do Dia",
-    7: "Promoção 1",
-  };
-  return categories[categoryId || 0] || "Null";
-};
-
-const getStatsName = (statsId?: number) => {
-  const stats: { [key: number]: string } = {
-    0: "Pendente",
-    1: "Ativo",
-    2: "Cancelado",
-    3: "Finalizado",
-  };
-  return stats[statsId || 0] || "Null";
 }
 
 const tableConfigs = {
@@ -145,7 +123,7 @@ const tableConfigs = {
     {
       key: "total",
       label: "Total",
-      render: (item: Order) => item.total.toFixed(2),
+      render: (item: Order) => formatCurrency(item.total),
     },
     {
       key: "status",
