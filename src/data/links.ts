@@ -26,11 +26,6 @@ import {
       icon: IconTruckDelivery,
     },
     {
-      title: "Carrinhos",
-      url: "/carts",
-      icon: IconShoppingCart,
-    },
-    {
       title: "Conteúdo do Site",
       url: "/content",
       icon: IconBrowser,

@@ -1,16 +1,5 @@
 import { useEffect, useState } from "react";
-
-export interface Product {
-  id: number;
-  nome: string;
-  description: string;
-  price: number;
-  image: string;
-  estoque: number;
-  category: number;
-  specifications: string;
-  category2: number;
-}
+import { Product } from "@/lib/types";
 
 export function useProducts(categoryId: string) {
   const [products, setProducts] = useState<Product[]>([]);
@@ -25,7 +14,6 @@ export function useProducts(categoryId: string) {
         const productList = data.map((product: any) => ({
           id: product.id,
           nome: product.nome,
-          description: product.description,
           specifications: product.specifications,
           price: product.preco,
           category: product.categoriaId,

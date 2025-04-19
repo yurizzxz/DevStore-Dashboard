@@ -1,17 +1,5 @@
 import { useEffect, useState } from "react";
-
-export interface User {
-  id: number;
-  nome: string;
-  email: string;
-  telefone: string;
-  cpf: string;
-  rua: string;
-  cidade: string;
-  estado: string;
-  cep: string;
-  cargo: string;
-}
+import { User } from "@/lib/types";
 
 export function useUsers() {
   const [users, setUsers] = useState<User[]>([]);

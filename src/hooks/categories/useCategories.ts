@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-
-export interface Category {
-  id: number;
-  nome: string;
-  description: string;
-  promotion?: boolean
-}
+import { Category } from "@/lib/types";
 
 export function useCategories() {
   const [categories, setCategories] = useState<Category[]>([]);

@@ -17,7 +17,10 @@ export interface User {
   email: string;
   telefone: string;
   cpf: string;
+  rua: string;
   cidade: string;
+  estado: string;
+  cep: string;
   cargo: string;
 }
 
@@ -25,7 +28,7 @@ export interface Category {
   id: number;
   nome: string;
   description: string;
-  promotion?: boolean;
+  promotion?: boolean
 }
 
 export interface Order {

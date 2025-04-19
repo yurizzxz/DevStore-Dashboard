@@ -1,16 +1,6 @@
 "use client"
 
 import * as React from "react"
-import {
-  IconLayoutDashboard,
-  IconPackage,
-  IconUsers,
-  IconSettings,
-  IconBrowser,
-  IconShoppingCart,
-  IconFolders,
-  IconTruckDelivery
-} from "@tabler/icons-react"
 
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavSecondary } from "@/components/sidebar/nav-secondary"
