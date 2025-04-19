@@ -155,7 +155,7 @@ const tableConfigs = {
     {
       key: "active",
       label: "Ativo",
-      render: (item: Section) => (item.ativo ? "Não" : "Sim"),
+      render: (item: Section) => (item.ativo ? "Sim" : "Não"),
     },
   ] as Column<Section>[],
 };
@@ -187,7 +187,6 @@ export function DataTable<K extends keyof DataMap>({
 
   const columns = tableConfigs[type] as Column<DataMap[K]>[];
 
-
   return (
     <div>
       <Table>
@@ -214,15 +213,20 @@ export function DataTable<K extends keyof DataMap>({
                   <TableCell key={col.key}>{col.render(item)}</TableCell>
                 ))}
                 <TableCell className="text-right">
-                 <TableActions
-  item={{
-    ...(item as Product),
-    categoryName: getCategoryName((item as Product).category),
-    category2Name: getCategoryName((item as Product).category2),
-  } as Product}
-  type={type}
-/>
-
+                  <TableActions
+                    item={
+                      {
+                        ...(item as Product),
+                        categoryName: getCategoryName(
+                          (item as Product).category
+                        ),
+                        category2Name: getCategoryName(
+                          (item as Product).category2
+                        ),
+                      } as Product
+                    }
+                    type={type}
+                  />
                 </TableCell>
               </TableRow>
             ))

@@ -14,6 +14,10 @@ export function useOrderActions() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleStatusChange = (value: string) => {
+    setFormData({ ...formData, status: value });
+  };
+
   const createOrder = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -101,6 +105,7 @@ export function useOrderActions() {
   return {
     formData,
     createOrder,
+    handleStatusChange,
     handleChange,
     deleteOrder,
     updateOrder,

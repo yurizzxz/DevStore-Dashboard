@@ -19,6 +19,13 @@ import { useProductActions } from "@/hooks/products/useProductActions";
 import { useCategoryActions } from "@/hooks/categories/useCategoryActions";
 import { useOrderActions } from "@/hooks/orders/useOrdersActions";
 import { useSectionActions } from "@/hooks/sections/useSectionActions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface TableActionsProps {
   item: Product | User | Category | Order | Section;
@@ -44,6 +51,7 @@ export function TableActions({ item, type }: TableActionsProps) {
   const {
     deleteOrder,
     updateOrder,
+    handleStatusChange,
     handleChange: handleOrderChange,
   } = useOrderActions();
 
@@ -51,6 +59,7 @@ export function TableActions({ item, type }: TableActionsProps) {
     deleteSection,
     updateSection,
     handleChange: handleSectionChange,
+    handleSeleChange,
   } = useSectionActions();
 
   return (
@@ -134,7 +143,7 @@ export function TableActions({ item, type }: TableActionsProps) {
                 name="price"
                 onChange={handleProductChange}
                 className="h-11"
-                defaultValue={((item as Product).price)}
+                defaultValue={(item as Product).price}
               />
               <Label className="-mb-1.5">Categoria</Label>
               <Input
@@ -225,6 +234,22 @@ export function TableActions({ item, type }: TableActionsProps) {
                 onChange={handleOrderChange}
                 defaultValue={(item as Order).total}
               />
+              <Label className="-mb-1.5">Status</Label>
+              <Select
+                name="ativo"
+                defaultValue={String((item as Order).status)}
+                onValueChange={handleStatusChange}
+              >
+                <SelectTrigger className="h-14 w-full">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">Pendente</SelectItem>
+                  <SelectItem value="1">Ativo</SelectItem>
+                  <SelectItem value="2">Cancelado</SelectItem>
+                  <SelectItem value="3">Finalizado</SelectItem>
+                </SelectContent>
+              </Select>
             </>
           )}
 
@@ -267,13 +292,19 @@ export function TableActions({ item, type }: TableActionsProps) {
               />
 
               <Label className="-mb-1.5">Ativo</Label>
-              <Input
-                className="h-11"
-                type="text"
+              <Select
                 name="ativo"
-                onChange={handleSectionChange}
-                defaultValue={(item as Section).ativo}
-              />
+                defaultValue={String((item as Section).ativo)}
+                onValueChange={handleSeleChange}
+              >
+                <SelectTrigger className="h-14  w-full">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">Sim</SelectItem>
+                  <SelectItem value="0">Não</SelectItem>
+                </SelectContent>
+              </Select>
             </>
           )}
 

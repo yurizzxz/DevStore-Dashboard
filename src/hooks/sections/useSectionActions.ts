@@ -19,6 +19,10 @@ export function useSectionActions() {
     setFormData({ ...formData, [name]: type === "checkbox" ? e.target.checked : value });
   };
 
+  const handleSeleChange = (value: string) => {
+    setFormData({ ...formData, ativo: value === "1" });
+  };
+
   const createSection = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -95,6 +99,7 @@ export function useSectionActions() {
   return {
     sections,
     formData,
+    handleSeleChange,
     handleChange,
     createSection,
     updateSection,

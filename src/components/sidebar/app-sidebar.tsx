@@ -37,7 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarSeparator className="-ml-[0.5px] mt-2 mb-3.5" />
       <SidebarContent>
         <NavMain items={navMain} pathname={pathname} />
-        <NavSecondary items={navSecondary} className="mt-auto" />
+        <NavSecondary items={navSecondary} className="mt-auto hidden" />
       </SidebarContent>
       <SidebarSeparator className="-ml-[0.5px]" />
       <SidebarFooter>

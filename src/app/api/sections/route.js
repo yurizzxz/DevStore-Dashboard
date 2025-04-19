@@ -1,7 +1,6 @@
 import { getConnection } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-// Função para obter as seções
 async function getSections() {
   let connection;
   try {
@@ -16,7 +15,6 @@ async function getSections() {
   }
 }
 
-// Função para criar uma seção
 async function createSection(req) {
   let connection;
   try {
@@ -42,7 +40,6 @@ async function createSection(req) {
   }
 }
 
-// Função para atualizar uma seção
 async function updateSection(req) {
   let connection;
   try {
@@ -88,7 +85,6 @@ async function updateSection(req) {
   }
 }
 
-// Função para deletar uma seção
 async function deleteSection(req) {
   let connection;
   try {
@@ -106,7 +102,6 @@ async function deleteSection(req) {
   }
 }
 
-// Funções exportadas para os métodos HTTP
 export async function GET() {
   return await getSections();
 }

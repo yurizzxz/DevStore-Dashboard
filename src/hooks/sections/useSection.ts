@@ -17,7 +17,7 @@ export function useSections() {
           tipo: user.tipo,
           categoriaId: user.categoriaId,
           ordem: user.ordem,
-          ativo: user.active
+          ativo: user.ativo
         }));
 
         setSections(userList);
