@@ -16,6 +16,10 @@ export function useCategoryActions() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handlePromotionChange = (value: string) => {
+    setFormData({ ...formData, promotion: value === "1" });
+  };
+
   const createCategory = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -36,7 +40,7 @@ export function useCategoryActions() {
 
       router.push("/categories");
 
-      toast.success("categoria cadastrada com sucesso!");
+      toast.success("Categoria cadastrada com sucesso!");
     } catch (error: any) {
       toast.error("Erro ao cadastrar categoria: " + error.message);
     }
@@ -57,7 +61,7 @@ export function useCategoryActions() {
       if (!res.ok) throw new Error(result.error || "Erro desconhecido");
 
       window.location.reload();
-      toast.success("categoria excluída com sucesso!");
+      toast.success("Categoria excluída com sucesso!");
     } catch (err: any) {
       toast.error("Erro ao deletar categoria: " + err.message);
     }
@@ -95,7 +99,7 @@ export function useCategoryActions() {
       if (!res.ok) throw new Error(result.error || "Erro desconhecido");
 
       window.location.reload();
-      toast.success("categoria atualizada com sucesso!");
+      toast.success("Categoria atualizada com sucesso!");
     } catch (err: any) {
       toast.error("Erro ao atualizar categoria: " + err.message);
     }
@@ -105,6 +109,7 @@ export function useCategoryActions() {
     formData,
     setFormData,
     createCategory,
+    handlePromotionChange,
     handleChange,
     deleteCategory,
     updateCategory,

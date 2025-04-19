@@ -26,6 +26,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getCategoryName } from "@/utils/mappers";
+import { useCategories } from "@/hooks/categories/useCategories";
 
 interface TableActionsProps {
   item: Product | User | Category | Order | Section;
@@ -33,6 +35,7 @@ interface TableActionsProps {
 }
 
 export function TableActions({ item, type }: TableActionsProps) {
+  const categories = useCategories();
   const {
     handleChange: handleUserChange,
     deleteUser,
@@ -41,11 +44,14 @@ export function TableActions({ item, type }: TableActionsProps) {
   const {
     deleteProduct,
     updateProduct,
+    handlePromoChange,
+    handleCatChange,
     handleChange: handleProductChange,
   } = useProductActions();
   const {
     deleteCategory,
     updateCategory,
+    handlePromotionChange,
     handleChange: handleCategoryChange,
   } = useCategoryActions();
   const {
@@ -110,13 +116,19 @@ export function TableActions({ item, type }: TableActionsProps) {
                 defaultValue={(item as Category).description}
               />
               <Label className="-mb-1.5">Promoção</Label>
-              <Input
-                type="text"
-                name="promotion"
-                onChange={handleCategoryChange}
-                className="h-11"
-                defaultChecked={(item as Category).promotion}
-              />
+              <Select
+                name="ativo"
+                defaultValue={String((item as Category).promotion)}
+                onValueChange={handlePromotionChange}
+              >
+                <SelectTrigger className="h-14  w-full">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">Sim</SelectItem>
+                  <SelectItem value="0">Não</SelectItem>
+                </SelectContent>
+              </Select>
             </>
           )}
 
@@ -146,22 +158,56 @@ export function TableActions({ item, type }: TableActionsProps) {
                 defaultValue={(item as Product).price}
               />
               <Label className="-mb-1.5">Categoria</Label>
-              <Input
-                type="text"
+              <Select
                 name="categoryName"
-                onChange={handleProductChange}
-                className="h-11"
-                defaultValue={(item as Product).categoryName}
-                readOnly
-              />
+                defaultValue={
+                  Object.keys(categories)
+                    .filter((id) => Number(id) <= 4)
+                    .includes(String((item as Product).categoryName))
+                    ? String((item as Product).categoryName)
+                    : ""
+                }
+                onValueChange={handleCatChange}
+              >
+                <SelectTrigger className="h-11 w-full">
+                  <SelectValue placeholder="Selecione uma categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(categories)
+                    .filter((id) => Number(id) > 0 && Number(id) <= 4)
+                    .map((id) => (
+                      <SelectItem key={id} value={id}>
+                        {getCategoryName(Number(id))}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+
               <Label className="-mb-1.5">Promoção</Label>
-              <Input
-                type="text"
+              <Select
                 name="category2Name"
-                onChange={handleProductChange}
-                className="h-11"
-                defaultValue={(item as Product).category2Name}
-              />
+                value={
+                  Object.keys(categories)
+                    .filter((id) => Number(id) >= 5)
+                    .includes(String((item as Product).category2Name))
+                    ? String((item as Product).category2Name)
+                    : ""
+                }
+                onValueChange={handlePromoChange}
+              >
+                <SelectTrigger className="h-14 w-full">
+                  <SelectValue placeholder="Selecione uma promoção" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(categories)
+                    .filter((id) => Number(id) >= 5)
+                    .map((id) => (
+                      <SelectItem key={id} value={id}>
+                        {getCategoryName(Number(id))}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
             </>
           )}
 
@@ -236,7 +282,7 @@ export function TableActions({ item, type }: TableActionsProps) {
               />
               <Label className="-mb-1.5">Status</Label>
               <Select
-                name="ativo"
+                name="status"
                 defaultValue={String((item as Order).status)}
                 onValueChange={handleStatusChange}
               >

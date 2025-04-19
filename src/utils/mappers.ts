@@ -6,7 +6,7 @@ const getCategoryName = (categoryId?: number) => {
     4: "Notebook",
     5: "Mais Vendidos",
     6: "Promoções do Dia",
-    7: "Promoção 1",
+    7: "Promoção",
   };
   return categories[categoryId || 0] || "";
 };

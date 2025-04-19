@@ -22,6 +22,14 @@ export function useProductActions() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleCatChange = (value: string) => {
+    setFormData({ ...formData, categoriaId: value });
+  };
+
+  const handlePromoChange = (value: string) => {
+    setFormData({ ...formData, categoriaId2: value });
+  };
+
   const createProduct = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -106,6 +114,8 @@ export function useProductActions() {
 
   return {
     formData,
+    handleCatChange,
+    handlePromoChange,
     setFormData,
     createProduct,
     handleChange,
