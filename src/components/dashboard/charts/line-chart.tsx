@@ -70,10 +70,10 @@ export function ChartLineInteractive() {
             <Line
               dataKey="desktop"
               type="natural"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-primary)"
               strokeWidth={2}
               dot={{
-                fill: "var(--color-desktop)",
+                fill: "var(--color-primary)",
               }}
               activeDot={{
                 r: 6,

@@ -2,6 +2,7 @@
 
 import { TrendingUp } from "lucide-react"
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
+import { usePedidosPorStatus } from "@/hooks/useOrderStatus"
 
 import {
   Card,
@@ -17,35 +18,36 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 285 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 203 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 264 },
-]
+import { getStatsName } from "@/utils/mappers"
+
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Pedidos",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig
 
 export function ChartRadarInteractive() {
+  const { pedidos, loading, error } = usePedidosPorStatus()
+
+  const chartData = pedidos.map((pedido: any) => ({
+    month: getStatsName(pedido.status),
+    desktop: pedido.total,
+  }))
+
   return (
     <Card>
       <CardHeader className="items-center pb-4">
-        <CardTitle>Radar Chart - Grid Filled</CardTitle>
+        <CardTitle>Status de Pedidos</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Total de pedidos separados por status
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[300px]"
         >
           <RadarChart data={chartData}>
             <ChartTooltip
@@ -62,13 +64,17 @@ export function ChartRadarInteractive() {
           </RadarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="flex items-center gap-2 leading-none text-muted-foreground">
-          January - June 2024
-        </div>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        {!loading && !error && (
+          <>
+            <div className="flex items-start gap-2 font-medium leading-none">
+              Dados atualizados <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="flex items-start gap-2 leading-none text-muted-foreground">
+              Baseado nos pedidos mais recentes
+            </div>
+          </>
+        )}
       </CardFooter>
     </Card>
   )
