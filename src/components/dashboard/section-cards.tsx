@@ -12,9 +12,11 @@ import {
 import { useFaturamentoTotal } from "@/hooks/useFaturamento";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useFinishedOrders } from "@/hooks/useFinishedOrders";
+import { useTotalUsers } from "@/hooks/useTotalUsers";
 
 export function SectionCards() {
   const { total } = useFaturamentoTotal()
+  const { totalUsers } = useTotalUsers()
   const { finishedOrders } = useFinishedOrders()
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-sidebar grid grid-cols-1 gap-3.5 *:data-[slot=card]:bg-sidebar *:data-[slot=card]:shadow-xs @xl/main:grid-cols-3  @5xl/main:grid-cols-3">
@@ -44,7 +46,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Novos Clientes</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
+            {totalUsers}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
