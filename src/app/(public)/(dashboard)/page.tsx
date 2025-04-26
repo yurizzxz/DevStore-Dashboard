@@ -6,6 +6,9 @@ import { SidebarInset } from "@/components/ui/sidebar";
 import {HeadingTitle} from "@/components/ui/heading";
 import { useProducts } from "@/hooks/products/useProducts";
 import { DataTable } from "@/components/table/data-table";
+import { ChartBarInteractive } from "@/components/dashboard/charts/bar-chart";
+import { ChartLineInteractive } from "@/components/dashboard/charts/line-chart";
+import { ChartRadarInteractive } from "@/components/dashboard/charts/radar-chart";
 
 interface Props {
   categoryId: string;
@@ -24,7 +27,9 @@ export default function Dashboard({ categoryId }: Props) {
             <HeadingTitle>Hi, Welcome Back! 👋</HeadingTitle>
             <SectionCards />
             <div className="">
-              <ChartAreaInteractive />
+              <ChartBarInteractive />
+              <ChartLineInteractive />
+              <ChartRadarInteractive />
             </div>
             <DataTable data={products} type="products" itemsPerPage={7} />
           </div>
