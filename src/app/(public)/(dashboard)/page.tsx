@@ -26,7 +26,7 @@ export default function Dashboard({ categoryId }: Props) {
           <div className="flex px-4 lg:px-6 flex-col gap-4 py-4 md:gap-6 md:py-6">
             <HeadingTitle>Hi, Welcome Back! 👋</HeadingTitle>
             <SectionCards />
-            <div className="">
+            <div className="grid md:grid-cols-2 gap-4">
               <ChartBarInteractive />
               <ChartLineInteractive />
               <ChartRadarInteractive />
