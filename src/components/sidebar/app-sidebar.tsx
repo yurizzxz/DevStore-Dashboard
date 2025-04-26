@@ -17,7 +17,7 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import {  navMain, navSecondary, navUser } from "@/data/links"
+import {  navMain, navSecondary } from "@/data/links"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
@@ -41,7 +41,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarSeparator className="-ml-[0.5px]" />
       <SidebarFooter>
-        <NavUser user={navUser} />
+      <NavUser />
       </SidebarFooter>
     </Sidebar>
   )

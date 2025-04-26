@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 interface User {
   id: number;
-  name: string;
+  nome: string;
   email: string;
   telefone: string;
   cpf: string;
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    router.push("/");
+    router.push("/login");
   };
 
   return (

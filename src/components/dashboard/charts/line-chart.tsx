@@ -18,6 +18,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useReceitaPorMes } from "@/hooks/useReceita";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 const chartConfig = {
   desktop: {
