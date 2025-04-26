@@ -2,8 +2,13 @@
 
 import { useEffect, useState } from 'react'
 
+interface ReceitaMensal {
+  mes_ano: string;
+  receita_total: number;
+}
+
 export function useReceitaPorMes() {
-  const [receita, setReceita] = useState([])
+  const [receita, setReceita] = useState<ReceitaMensal[]>([]);
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 

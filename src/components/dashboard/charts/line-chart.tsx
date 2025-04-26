@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts";
 
 import {
   Card,
@@ -10,21 +10,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
+} from "@/components/ui/chart";
+import { useReceitaPorMes } from "@/hooks/useReceita";
 
 const chartConfig = {
   desktop: {
@@ -35,14 +28,21 @@ const chartConfig = {
     label: "Mobile",
     color: "hsl(var(--chart-2))",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function ChartLineInteractive() {
+  const { receita, error, loading } = useReceitaPorMes();
+
+  const chartData = receita.map((item) => ({
+    month: item.mes_ano,
+    receita: item.receita_total,
+  }));
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart - Label</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Vendas por Mês</CardTitle>
+        <CardDescription>Janeiro - Dezembro 2025</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -68,7 +68,7 @@ export function ChartLineInteractive() {
               content={<ChartTooltipContent indicator="line" />}
             />
             <Line
-              dataKey="desktop"
+              dataKey="receita"
               type="natural"
               stroke="var(--color-primary)"
               strokeWidth={2}
@@ -91,12 +91,13 @@ export function ChartLineInteractive() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Dados atualizados
+          <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Baseado nos pedidos mais recentes
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

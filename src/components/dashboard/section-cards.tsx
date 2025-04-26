@@ -15,9 +15,9 @@ import { useFinishedOrders } from "@/hooks/useFinishedOrders";
 import { useTotalUsers } from "@/hooks/useTotalUsers";
 
 export function SectionCards() {
-  const { total } = useFaturamentoTotal()
-  const { totalUsers } = useTotalUsers()
-  const { finishedOrders } = useFinishedOrders()
+  const { total } = useFaturamentoTotal();
+  const { totalUsers } = useTotalUsers();
+  const { finishedOrders } = useFinishedOrders();
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-sidebar grid grid-cols-1 gap-3.5 *:data-[slot=card]:bg-sidebar *:data-[slot=card]:shadow-xs @xl/main:grid-cols-3  @5xl/main:grid-cols-3">
       <Card className="@container/card">
@@ -34,17 +34,17 @@ export function SectionCards() {
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Em alta este mês <IconTrendingUp className="size-4" />
+          <div className="flex items-start gap-2 font-medium leading-none">
+            Dados atualizados <IconTrendingUp className="h-4 w-4" />
           </div>
-          <div className="text-muted-foreground">
-            Comparado aos últimos 6 meses
+          <div className="flex items-start gap-2 leading-none text-muted-foreground">
+            Baseado nos pedidos mais recentes
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Novos Clientes</CardDescription>
+          <CardDescription>Total de Usuários</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {totalUsers}
           </CardTitle>
@@ -56,12 +56,11 @@ export function SectionCards() {
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 text-sm flex gap-2 font-medium">
-            Queda de 20% nesse período
-            <IconTrendingDown className="size-4" />
+          <div className="flex items-start gap-2 font-medium leading-none">
+            Dados atualizados <IconTrendingUp className="h-4 w-4" />
           </div>
-          <div className="text-muted-foreground">
-            Vamos melhorar nos próximos meses
+          <div className="flex items-start gap-2 leading-none text-muted-foreground">
+            Baseado nos pedidos mais recentes
           </div>
         </CardFooter>
       </Card>

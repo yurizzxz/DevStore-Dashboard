@@ -35,19 +35,20 @@ export function ChartRadarInteractive() {
     month: getStatsName(pedido.status),
     desktop: pedido.total,
   }))
+  
 
   return (
     <Card>
       <CardHeader className="items-center pb-4">
-        <CardTitle>Status de Pedidos</CardTitle>
+        <CardTitle>Pedidos</CardTitle>
         <CardDescription>
-          Total de pedidos separados por status
+          Acompanhe os status dos pedidos!
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
+          className="mx-auto max-h-[275px]"
         >
           <RadarChart data={chartData}>
             <ChartTooltip

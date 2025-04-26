@@ -17,7 +17,7 @@ export function useCategoriasMaisVendidas() {
         }
 
         const data = await res.json()
-        setCategorias(data.categorias)
+        setCategorias(data)
       } catch (err: any) {
         console.error('Erro:', err)
         setError(err.message)
