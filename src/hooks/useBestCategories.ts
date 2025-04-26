@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react'
 
 export function useCategoriasMaisVendidas() {
   const [categorias, setCategorias] = useState([])
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchCategorias() {
       try {
-        const res = await fetch('/api/best-categories')
+        const res = await fetch('/api/bests-categories')
 
         if (!res.ok) {
           throw new Error('Erro ao buscar categorias mais vendidas')

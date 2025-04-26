@@ -2,6 +2,7 @@
 
 import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { useCategoriasMaisVendidas } from "@/hooks/useBestCategories"
 
 import {
   Card,
@@ -17,28 +18,27 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Total Vendido",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig
 
 export function ChartBarInteractive() {
+  const { categorias } = useCategoriasMaisVendidas()
+
+  const chartData = categorias.map((categoria: any) => ({
+    month: categoria.categoria_nome,
+    desktop: categoria.total_vendido,
+  }))
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Categorias Mais Vendidas</CardTitle>
+        <CardDescription>Baseado em pedidos finalizados</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -49,7 +49,6 @@ export function ChartBarInteractive() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
               cursor={false}
@@ -61,10 +60,10 @@ export function ChartBarInteractive() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          Crescendo 5.2% este mês <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Exibindo categorias mais vendidas em pedidos finalizados
         </div>
       </CardFooter>
     </Card>

@@ -31,7 +31,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function ChartLineInteractive() {
-  const { receita, error, loading } = useReceitaPorMes();
+  const { receita } = useReceitaPorMes();
 
   const chartData = receita.map((item) => ({
     month: item.mes_ano,
