@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from 'react'
 
-export function useCategoriasMaisVendidas() {
-  const [categorias, setCategorias] = useState([])
+export function useReceitaPorMes() {
+  const [receita, setReceita] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchCategorias() {
+    async function fetchReceita() {
       try {
-        const res = await fetch('/api/best-categories')
+        const res = await fetch('/api/receita')
 
         if (!res.ok) {
-          throw new Error('Erro ao buscar categorias mais vendidas')
+          throw new Error('Erro ao buscar receita por mês')
         }
 
         const data = await res.json()
-        setCategorias(data.categorias)
+        setReceita(data)
       } catch (err: any) {
         console.error('Erro:', err)
         setError(err.message)
@@ -26,8 +26,8 @@ export function useCategoriasMaisVendidas() {
       }
     }
 
-    fetchCategorias()
+    fetchReceita()
   }, [])
 
-  return { categorias, error, loading }
+  return { receita, error, loading }
 }
