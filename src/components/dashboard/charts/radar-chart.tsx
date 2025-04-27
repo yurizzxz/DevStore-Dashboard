@@ -38,7 +38,7 @@ export function ChartRadarInteractive() {
   return (
     <Card>
       <CardHeader className="items-center pb-4">
-        <CardTitle>Pedidos</CardTitle>
+        <CardTitle className="text-lg -mb-1">Pedidos</CardTitle>
         <CardDescription>Acompanhe os status dos pedidos!</CardDescription>
       </CardHeader>
       <CardContent className="pb-0">

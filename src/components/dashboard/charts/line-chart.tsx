@@ -42,7 +42,7 @@ export function ChartLineInteractive() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Vendas por Mês</CardTitle>
+        <CardTitle className="text-lg -mb-1">Relatório de Receita</CardTitle>
         <CardDescription>Janeiro - Dezembro 2025</CardDescription>
       </CardHeader>
       <CardContent>

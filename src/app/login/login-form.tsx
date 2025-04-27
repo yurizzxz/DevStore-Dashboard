@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/buttonUi";
+
 import {
   Card,
   CardContent,
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Image from "next/image";
 
 export function LoginForm({
   className,
@@ -95,6 +97,7 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
+          
           <CardTitle className="text-2xl">
             {isRegister ? "Cadastro" : "Login"}
           </CardTitle>
@@ -115,7 +118,7 @@ export function LoginForm({
                       id="nome"
                       value={nome}
                       onChange={(e) => setNome(e.target.value)}
-                      placeholder="Seu nome completo"
+                      placeholder="Digite seu nome..."
                       required
                     />
                   </div>
@@ -128,7 +131,7 @@ export function LoginForm({
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="m@example.com"
+                  placeholder="Digite seu email..."
                   required
                 />
               </div>
@@ -138,7 +141,7 @@ export function LoginForm({
                   {!isRegister && (
                     <a
                       href="#"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                      className="ml-auto cursor-pointer inline-block text-sm underline-offset-4 hover:underline"
                     >
                       Esqueceu a senha?
                     </a>
@@ -171,12 +174,13 @@ export function LoginForm({
               <button
                 type="button"
                 onClick={() => setIsRegister(!isRegister)}
-                className="underline underline-offset-4"
+                className="cursor-pointer text-primary underline underline-offset-4"
               >
                 {isRegister ? "Faça login" : "Cadastre-se"}
               </button>
             </div>
           </form>
+          
         </CardContent>
       </Card>
     </div>

@@ -37,7 +37,7 @@ export function ChartBarInteractive() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Categorias Mais Vendidas</CardTitle>
+        <CardTitle className="text-lg -mb-1">Categorias Mais Vendidas</CardTitle>
         <CardDescription>Baseado em pedidos finalizados</CardDescription>
       </CardHeader>
       <CardContent>

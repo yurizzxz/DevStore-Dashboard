@@ -4,10 +4,10 @@ import { NextResponse } from 'next/server'
 export async function GET(req) {
   try {
     const db = await getConnection();
-    const [rows] = await db.query('SELECT * FROM faturamento_total_view');
+    const [rows] = await db.query('SELECT total FROM faturamento_total WHERE id = 1');
     
     if (rows.length > 0) {
-      const total = rows[0].total_faturado || 0;
+      const total = rows[0].total || 0;
       return NextResponse.json({ total }, { status: 200 });
     } else {
       return NextResponse.json({ error: 'Dados não encontrados' }, { status: 404 });

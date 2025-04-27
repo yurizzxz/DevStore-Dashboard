@@ -264,14 +264,6 @@ export function TableActions({ item, type }: TableActionsProps) {
 
           {type === "orders" && (
             <>
-              <Label className="-mb-1.5">Status</Label>
-              <Input
-                className="h-11"
-                type="text"
-                name="status"
-                onChange={handleOrderChange}
-                defaultValue={(item as Order).status}
-              />
               <Label className="-mb-1.5">Total</Label>
               <Input
                 className="h-11"
